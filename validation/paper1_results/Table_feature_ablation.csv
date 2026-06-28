@@ -1,6 +1,0 @@
-Config,Label,XGBoost,LDA,Best_Clf,Best_Acc
-Full,Full (420D),0.6596 +/- 0.0601,0.6555 +/- 0.0578,XGBoost,0.6596
-noICC,{-ICC},0.6566 +/- 0.0590,0.6504 +/- 0.0572,XGBoost,0.6566
-noTKEO,{-TKEO},0.6598 +/- 0.0580,0.6553 +/- 0.0574,XGBoost,0.6598
-noHjorth,{-Hjorth},0.6602 +/- 0.0591,0.6559 +/- 0.0583,XGBoost,0.6602
-noFreq,{-Freq},0.6597 +/- 0.0596,0.6541 +/- 0.0584,XGBoost,0.6597

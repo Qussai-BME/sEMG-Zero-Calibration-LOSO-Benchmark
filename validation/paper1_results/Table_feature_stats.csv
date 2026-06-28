@@ -1,9 +1,0 @@
-classifier,comparison,config,mean_full,mean_ablation,mean_diff_pct,W,p_value,rank_biserial_r,cohens_d,effect_size,significant,p_value_corrected,significant_corrected
-XGBoost,{-ICC} vs Full,noICC,0.6596,0.6566,0.29,32,0.0037,0.8615,0.7448,medium,**,0.0148,Yes
-XGBoost,{-TKEO} vs Full,noTKEO,0.6596,0.6598,-0.02,112,0.6494,0.5553,-0.0317,negligible,n.s.,1.0000,No
-XGBoost,{-Hjorth} vs Full,noHjorth,0.6596,0.6602,-0.06,116,0.7502,0.5415,-0.1841,negligible,n.s.,1.0000,No
-XGBoost,{-Freq} vs Full,noFreq,0.6596,0.6597,-0.01,122,0.8967,0.5158,-0.0201,negligible,n.s.,0.8967,No
-LDA,{-ICC} vs Full,noICC,0.6555,0.6504,0.51,12,0.0003,0.9481,1.4253,large,***,0.0013,Yes
-LDA,{-TKEO} vs Full,noTKEO,0.6555,0.6553,0.02,106,0.5235,0.5810,0.0821,negligible,n.s.,1.0000,No
-LDA,{-Hjorth} vs Full,noHjorth,0.6555,0.6559,-0.04,112,0.6494,0.5553,-0.1657,negligible,n.s.,0.6494,No
-LDA,{-Freq} vs Full,noFreq,0.6555,0.6541,0.14,61,0.0329,0.7589,0.4594,small,*,0.0987,No

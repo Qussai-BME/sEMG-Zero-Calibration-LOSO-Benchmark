@@ -1,5 +1,0 @@
-classifier,test,chi2,p_value,significant,n_subjects,n_conditions
-XGBoost,Friedman,1889.1429,1.0000,n.s.,22,7
-LDA,Friedman,1882.7143,1.0000,n.s.,22,7
-LinearSVC,Friedman,1508.1429,1.0000,n.s.,22,7
-RandomForest,Friedman,2209.7143,1.0000,n.s.,22,7
