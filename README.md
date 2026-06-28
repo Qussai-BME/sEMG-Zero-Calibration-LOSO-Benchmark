@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/downloads/)
 [![Status](https://img.shields.io/badge/Status-Under%20Review-orange.svg)](#)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20982280.svg)](https://doi.org/10.5281/zenodo.20982280)
 
 **Maintainer:** Qussai Adlbi
 **Affiliations:** Al-Andalus University for Medical Sciences (Syria) · Pázmány Péter Catholic University (Budapest, Hungary)
@@ -175,7 +176,7 @@ Download the raw `.mat` files and place them under `data/raw/`; `data_loaders/` 
 }
 ```
 
-**Code and pre-computed results:** archived in full in this repository. A versioned, DOI-citable release will be published via Zenodo following the manuscript's first public GitHub release; this section will be updated with that DOI once available.
+**Code and pre-computed results:** archived in full at Zenodo — [https://doi.org/10.5281/zenodo.20982280](https://doi.org/10.5281/zenodo.20982280) (Release v1.0, June 2026), and on GitHub at the link above.
 
 ---
 
