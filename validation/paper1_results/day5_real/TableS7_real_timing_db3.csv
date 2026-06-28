@@ -1,0 +1,6 @@
+Method,Train_Time_s,Batch_Infer_s,Single_Infer_ms,Model_Size_KB,Accuracy,Macro_F1,N_Train,N_Test,N_Features
+XGBoost,63.66,0.047,0.302,3515.6,0.028,0.0219,25000,2500,420
+LDA,0.81,0.0,0.187,208.6,0.0484,0.0281,25000,2500,420
+LinearSVC,20191.01,0.231,0.487,139.2,0.0396,0.0209,25000,2500,420
+RandomForest,159.4,0.163,7.582,201254.0,0.028,0.0308,25000,2500,420
+"CNN-1D (v8, 400ms)",82.0,N/A,~5.0,200.0,21.60% (DB7),N/A,60000 (capped),30000 (capped),12 ch x 800 samples

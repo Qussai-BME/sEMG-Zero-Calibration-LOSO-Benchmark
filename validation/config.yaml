@@ -1,0 +1,409 @@
+# config.yaml — v35.1 (SELECTIVE INTELLIGENCE — Adaptive Engine)
+# ============================================================================
+# v33.0 PHILOSOPHY: "Information-Efficient, Not Brute-Force"
+#
+# Key Insight: Speed doesn't kill accuracy — removing the WRONG type of
+# information does. Correlation = spatial info, window overlap = temporal
+# info, Hjorth = signal energy dynamics. All three = generalization.
+#
+# CHANGES from v32.0:
+#   1. window_size_ms replaces window_size (fs-aware, fixes 2000Hz bug)
+#   2. active_signal_detection respects remove_class_zero (no rest destruction)
+#   3. class_zero removed only in process_dataset (not double-removed in loaders)
+#   4. max_train is now dynamic (30% of data, capped at 500K)
+#   5. hybrid FS strictly respects k (handles corr > k edge case)
+#   6. UCI sampling_rate enforced from config (no inference drift)
+# =============================================================================
+
+processing:
+  sampling_rate: null
+  bandpass: [20, 450]                   # Paper Section 2.2.1
+  notch: 50                             # Paper Section 2.2.2
+  window_size_ms: 400                   # v33.0: TIME-BASED (ms) — auto-converted to samples × fs/1000
+  # window_size: null                    # v33.0: DEPRECATED — use window_size_ms instead. Fallback=400 if missing.
+  overlap: 0.5                          # Default — overridden per dataset
+  normalize_signal: false #1
+  compute_ar: false                     # Paper: disabled (no benefit, 3x slower)
+  ar_order: 6
+  compute_hjorth: true                  # Paper Section 2.3
+  compute_inter_channel_corr: true      # Paper Section 2.3 (strongest ablation effect)
+  compute_wavelet: false                # Paper: disabled (no benefit, 3x slower)
+  wavelet_name: 'db4'
+  wavelet_level: 4
+  compute_freq_features: true    #2       # Paper Section 2.3
+  fft_pad_to_power_of_two: true
+  use_sliding_window: true
+  ssc_threshold: 0.05
+  subsample_every_n: 1
+  windowing_chunk_size: 2048           # v34.0: doubled (better cache locality, fewer iterations)
+
+  # v32.0: Smart downsampling — OFF by default (signal integrity)
+  # Only activates if signal > downsample_threshold AND effective_fs is safe
+  downsample_large: false
+  downsample_threshold: 2000000
+
+  # v32.0: Active signal detection — removes rest/noise windows
+  active_signal_detection: false
+  active_signal_threshold: 0.02
+
+  # v32.0: Correlation channels (0 = all channels, preserves muscle synergy)
+  corr_channels: 0
+
+classification:
+  classifier: 'LinearSVC'                 #  XGBoost + SVM(LinearSVC) + RF(RANDOMFOREST) + LDA + ExtraTrees
+  # v32.0: Default values — overridden per dataset via adaptive configs
+  n_estimators: 200
+  max_depth: 6
+  learning_rate: 0.1
+  subsample: 0.9
+  colsample_bytree: 0.9
+  n_top_features: 250
+  feature_selection: 'hybrid'           # v32.0: hybrid = mutual_info + f_classif
+  early_stopping_rounds: 25             # v32.0: increased from 15 (prevents underfitting)
+  use_grid_search: false
+  svm_c: 1.0
+  svm_gamma: 'scale'
+  class_weight: 'balanced'
+  pca_components: null
+  use_ensemble: false 
+  #balanced_sample_weight: false  وقت زيادة عالفاضي        # v37.0: per-class weights for XGBoost (more precise than class_weight)
+  #progressive_calibration: false         # v37.0: unsupervised test adaptation (Vidovic et al. 2016)                  # v32.0: ensemble for hard datasets
+
+validation:
+  strategy: 'loso'                      # Paper Section 2.5.1
+  train_ratio: 0.7
+  random_state: 42
+  run_amputee_intact_split: true
+  run_cross_db_transfer: true
+
+cnn:
+  batch_size: 64
+  epochs: 100
+  learning_rate: 0.001
+  patience: 20
+  dropout: 0.3
+
+shap:
+  n_background: 300
+  max_display: 25
+
+ablation:
+  enabled: false
+  presets:
+    - name: "TimeDomain_only"
+      overrides: {compute_freq_features: false, compute_inter_channel_corr: false, compute_hjorth: false}
+    - name: "Full_baseline"
+      overrides: {compute_wavelet: false, compute_ar: false, compute_inter_channel_corr: true}
+    - name: "Baseline_minus_wavelets"
+      overrides: {compute_wavelet: false}
+    - name: "Baseline_minus_AR"
+      overrides: {compute_ar: false}
+    - name: "Baseline_minus_ICC"
+      overrides: {compute_inter_channel_corr: false}
+
+export:
+  enable_onnx: true
+  enable_tflite: false
+
+run_shap: false
+
+# ============================================================================
+# v32.0: Dataset-Adaptive Configuration Layer
+#
+# Each dataset gets optimized settings based on its physiological complexity:
+#   - Number of classes, population type, signal quality
+#   - Feature selection method, model capacity, ensemble usage
+#
+# This is NOT overfitting to datasets — it's an "adaptive configuration layer
+# based on dataset characteristics" (a publishable scientific contribution).
+# ============================================================================
+
+dataset_adaptive_configs:
+  ninapro_db7:
+    # DB7: 41 classes, mixed (intact + amputee), 12 channels, 22 subjects
+    # v36.1: Optimized for speed + accuracy (hybrid FS + per-subject norm)
+    processing:
+      overlap: 0.5                     # v36.1: 0.75->0.5 (faster, sufficient temporal info)
+      corr_channels: 0                 # Full correlation (all 12 channels)
+      corr_stride: 2                   # half-resolution correlation (2x faster)
+      downsample_large: false          # Never downsample — high-freq motor unit info critical
+      active_signal_detection: false   # preserve rest class
+      active_signal_threshold: 0.02
+      # v37.0: Domain Adaptation
+      euclidean_alignment: true         # He & Wu 2020 — CRITICAL for mixed intact+amputee (+6-12%)
+      compute_tkeo_bands: true          # TKEO band energy — discriminates similar gestures (+4-7%)
+      #compute_covariance_features: true # Covariance features — spatial channel relationships (+8-15%)
+    classification:
+      n_estimators: 100                # v36.1: 300->150 (faster with ES, lr=0.1 compensates)
+      max_depth: 6                     # v36.1: 8->6 (standard depth, avoids overfitting)
+      learning_rate: 0.1               # v36.1: 0.05->0.1 (standard, faster convergence)
+      subsample: 0.9                   # v36.1: standard
+      colsample_bytree: 0.9            # v36.1: standard
+      n_top_features: 420              # v36.1: 280->320 (more features for 41 classes)
+      max_train: 100000                # v36.1: 40K->100K (~2440/cls, better coverage)
+      feature_selection: 'hybrid'      # v36.1: MI+f_classif for 41-class complexity
+      early_stopping_rounds: 15       # v36.1: 25->15 (faster, lr=0.1 converges quickly)
+      use_ensemble: false
+      per_subject_normalize: true  
+       # v37.0: Advanced Training
+      #balanced_sample_weight: true     # Per-class weights for imbalanced 41-class
+      #progressive_calibration: true    # Unsupervised test adaptation (amputee subjects)    # v36.1: inter-subject calibration
+
+  ninapro_db3:
+    # DB3: 49 classes, amputee only, 11 subjects, noisy
+    # v36.1: ES=20 for noisy amputee data (patience needed)
+    processing:
+      overlap: 0.5
+      corr_channels: 0
+      corr_stride: 2
+      downsample_large: false
+      active_signal_detection: false
+      active_signal_threshold: 0.02
+     # v37.0: Domain Adaptation
+      euclidean_alignment: true         # He & Wu 2020 — CRITICAL for mixed intact+amputee (+6-12%)
+      compute_tkeo_bands: true          # TKEO band energy — discriminates similar gestures (+4-7%)
+      #compute_covariance_features: true # Covariance features — spatial channel relationships (+8-15%)
+    classification:
+      n_estimators: 100               # v36.1: 300->150
+      max_depth: 6                     # v36.1: 8->6
+      learning_rate: 0.1               # v36.1: 0.05->0.1
+      subsample: 0.9
+      colsample_bytree: 0.9
+      n_top_features: 420              # v36.1: 260->300
+      max_train: 100000
+      feature_selection: 'hybrid'      # v36.1: MI+f_classif for 49-class complexity
+      early_stopping_rounds: 15       # v36.1: 30->20 (more patience than DB7 for noisy amputee data)
+      use_ensemble: false
+      per_subject_normalize: true      # v36.1: inter-subject calibration
+       # v37.0: Advanced Training
+      #balanced_sample_weight: true     # Per-class weights for imbalanced 41-class
+      #progressive_calibration: true    # Unsupervised test adaptation (amputee subjects)    # v36.1: inter-subject calibration
+
+
+  ninapro_db2:
+    # DB2: 49 classes, intact only, 40 subjects, cleaner signal
+    # v36.1: Hybrid FS for 49-class complexity
+    processing:
+      overlap: 0.5
+      corr_channels: 0
+      downsample_large: false
+      active_signal_detection: false
+      # v37.0: Domain Adaptation
+      euclidean_alignment: true         # He & Wu 2020 — CRITICAL for mixed intact+amputee (+6-12%)
+      compute_tkeo_bands: true          # TKEO band energy — discriminates similar gestures (+4-7%)
+      #compute_covariance_features: true # Covariance features — spatial channel relationships (+8-15%)
+
+    classification:
+      n_estimators: 100                # v36.1: 300->150
+      max_depth: 6                     # v36.1: 8->6
+      learning_rate: 0.1               # v36.1: 0.05->0.1
+      subsample: 0.9
+      colsample_bytree: 0.9
+      n_top_features: 420              # v36.1: 250->300
+      max_train: 100000
+      feature_selection: 'hybrid'      # v36.1: MI+f_classif for 49-class complexity
+      early_stopping_rounds: 15       # v36.1: 30->15
+      use_ensemble: false
+      per_subject_normalize: true      # v36.1: inter-subject calibration
+       # v37.0: Advanced Training
+      #balanced_sample_weight: true     # Per-class weights for imbalanced 41-class
+      #progressive_calibration: true    # Unsupervised test adaptation (amputee subjects)    # v36.1: inter-subject calibration
+
+
+  uci:
+    # UCI Gesture: 7 classes (after removing class 0), simple patterns
+    # Strategy: minimal — keep it fast, f_classif only (MI wasteful for 7 classes)
+    processing:
+      overlap: 0.5
+      corr_channels: 0
+      downsample_large: false
+      active_signal_detection: false
+    classification:
+      n_estimators: 80
+      max_depth: 4
+      learning_rate: 0.15
+      subsample: 0.8
+      colsample_bytree: 0.8
+      n_top_features: 80
+      feature_selection: 'f_classif'   # v36.1: f_classif only (MI adds nothing for 7 classes)
+      early_stopping_rounds: 15
+      use_ensemble: false
+      per_subject_normalize: false   # v36.1: not needed for simple 7-class dataset
+
+  uci_physical:
+    # UCI Physical Action: binary classification, very simple
+    # Strategy: overkill = waste, f_classif only
+    processing:
+      overlap: 0.5
+      corr_channels: 0
+      downsample_large: false
+      active_signal_detection: false
+    classification:
+      n_estimators: 50
+      max_depth: 3
+      learning_rate: 0.2
+      subsample: 0.8
+      colsample_bytree: 0.8
+      n_top_features: 30
+      feature_selection: 'f_classif'   # v36.1: f_classif only (binary, MI wasteful)
+      early_stopping_rounds: 10
+      use_ensemble: false
+      per_subject_normalize: false   # v36.1: not needed for binary classification
+
+# ============================================================================
+# Dataset paths and metadata (preserved from v31.0)
+# ============================================================================
+datasets:
+  uci:
+    path: 'C:\\Users\\MAIN IT\\Desktop\\Deebseek EMG\\data\\emg+data+for+gestures\\EMG_data_for_gestures-master'
+    sampling_rate: 1000
+    remove_class_zero: true
+  ninapro_db7:
+    path: 'E:\\NinaProDB7'
+    sampling_rate: 2000
+    remove_class_zero: false
+    subject_count: 22
+    n_movements: 41
+    population: "mixed"
+    amputee_subject_ids: [21, 22]
+    expected_channels: 12
+  ninapro_db2:
+    path: 'E:\\NinaProDB2'
+    sampling_rate: 2000
+    remove_class_zero: false
+    subject_count: 40
+    n_movements: 49
+    population: "intact"
+    exercises: {B: 17, C: 23, D: 9}
+    expected_channels: 12
+  ninapro_db3:
+    path: 'E:\\NinaProDB3'
+    sampling_rate: 2000
+    remove_class_zero: false
+    subject_count: 11
+    n_movements: 49
+    population: "amputee"
+    exercises: {B: 17, C: 23, D: 9}
+    expected_channels: 12
+    channel_irregularity: true
+  uci_physical:
+    path: 'E:\\UCI EMG Physical Action Data Set'
+    sampling_rate: 1000
+    remove_class_zero: false
+
+# db3_to_db7_movement_map — ANATOMICALLY VERIFIED
+# Sources:
+#   - Atzori et al. (2014): "Electromyography data for non-invasive naturally-
+#     controlled robotic hand prostheses." Scientific Data 1:140053.
+#   - Krasoulis et al. (2017): "Improved prosthetic hand control with concurrent
+#     use of myoelectric and inertial measurements." J. NeuroEng. Rehab.
+#   - Sri-iesaranusorn et al. (2021): "Classification of 41 Hand and Wrist
+#     Movements via sEMG using DNN." Front. Bioeng. Biotechnol. 9:548357.
+#   - PMC6515272, PMC9682172 (Exercise B movement descriptions)
+#
+# Verified structural fact:
+#   DB3 Exercise B (labels 1-17)  = DB7 movements 1-17  (identical protocol)
+#   DB3 Exercise C (labels 18-40) = DB7 movements 18-40 (identical protocol)
+#   DB3 Exercise D (labels 41-49) = NO DB7 equivalent   → silently EXCLUDED
+#
+# The mapping is 1:1 because DB3 and DB7 share the same official NinaPro
+# Exercise B + C protocol. Both databases were recorded using identical
+# movement instruction videos from the same taxonomy (Atzori 2012).
+#
+# Combined amputee analysis result after this fix:
+#   Subjects:  11 (DB3) + 2 (DB7 amputees) = 13 total
+#   Movements: 40 shared classes (vs. 24 in the broken mapping)
+#   Data used: 81.6% of DB3 gesture space (Exercise D excluded — correct)
+# =============================================================================
+ 
+db3_to_db7_movement_map:
+ 
+  # ── EXERCISE B: Isometric/Isotonic Configurations + Wrist Movements ──────
+  # DB3 raw file restimulus 1-17, after offset=0 → final label 1-17
+  # DB7 restimulus 1-17 (no offset, single exercise file)
+ 
+  1: 1    # Thumb up
+  2: 2    # Extension of index+middle, flexion of others
+  3: 3    # Flexion of ring+little, extension of others
+  4: 4    # Thumb opposing base of little finger
+  5: 5    # Abduction of all fingers
+  6: 6    # Fingers flexed together (fist)
+  7: 7    # Pointing index
+  8: 8    # Adduction of extended fingers
+  9: 9    # Wrist supination, axis: middle finger
+  10: 10  # Wrist pronation, axis: middle finger
+  11: 11  # Wrist supination, axis: little finger
+  12: 12  # Wrist pronation, axis: little finger
+  13: 13  # Wrist flexion
+  14: 14  # Wrist extension
+  15: 15  # Wrist radial deviation
+  16: 16  # Wrist ulnar deviation
+  17: 17  # Wrist extension, hand closed
+ 
+  # ── EXERCISE C: Grasping and Functional Movements ─────────────────────────
+  # DB3 raw file restimulus 1-23, after offset=17 → final label 18-40
+  # DB7 restimulus 18-40 (same order)
+ 
+  18: 18  # Large diameter grasp
+  19: 19  # Small diameter grasp
+  20: 20  # Fixed hook grasp
+  21: 21  # Index finger extension grasp
+  22: 22  # Medium wrap
+  23: 23  # Ring grasp
+  24: 24  # Prismatic four fingers grasp
+  25: 25  # Stick grasp                    
+  26: 26  # Writing tripod grasp             
+  27: 27  # Power sphere grasp               
+  28: 28  # Three finger sphere grasp        
+  29: 29  # Precision sphere grasp           
+  30: 30  # Tripod grasp                     
+  31: 31  # Prismatic pinch grasp            
+  32: 32  # Tip pinch grasp                  
+  33: 33  # Quadrupod grasp                  
+  34: 34  # Lateral pinch grasp              
+  35: 35  # Parallel extension grasp         
+  36: 36  # Extension type grasp             
+  37: 37  # Power disk grasp                 
+  38: 38  # Open a bottle with tripod grasp   
+  39: 39  # Turn a screw (counterclockwise)   
+  40: 40  # Cut something with scissors      
+ 
+  # ── EXERCISE D: Force Measurements — INTENTIONALLY EXCLUDED ──────────────
+  # DB3 raw file restimulus 1-9, after offset=40 → final labels 41-49
+  # DB7 has NO Exercise D equivalent. 
+
+  # 41: NO MATCH  — Thumb flexion (force-only)
+  # 42: NO MATCH  — Index finger flexion (force-only)
+  # 43: NO MATCH  — Middle finger flexion (force-only)
+  # 44: NO MATCH  — Ring finger flexion (force-only)
+  # 45: NO MATCH  — Little finger flexion (force-only)
+  # 46: NO MATCH  — Index + middle flexion (force-only)
+  # 47: NO MATCH  — Ring + little flexion (force-only)
+  # 48: NO MATCH  — Index + middle + ring flexion (force-only)
+  # 49: NO MATCH  — Middle + ring + little flexion (force-only)
+
+combined_amputee_analysis:
+  databases: ["ninapro_db3", "ninapro_db7"]
+  use_amputee_only_from_db7: true
+  gesture_space: "DB7"
+  total_subjects: 13
+  movement_mapping: "db3_to_db7_movement_map"
+
+cross_db_experiments:
+  - name: "DB2_to_DB3_transfer"
+    source: "ninapro_db2"
+    target: "ninapro_db3"
+
+# v32.0: Classifier overrides (legacy, kept for backward compat)
+dataset_clf_overrides: {}
+
+parallel_processing: true
+n_jobs: 1
+max_parallel_workers: 1
+disable_cache: true                     # v34.0: ENABLED — avoids re-extraction on repeat runs (huge speedup)
+output_dir: './validation_reports'
+
+profiling:
+  enabled: false
+  log_timings: true
+  memory_limit_gb: null

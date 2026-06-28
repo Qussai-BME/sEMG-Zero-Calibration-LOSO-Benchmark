@@ -1,0 +1,4 @@
+Database,N,K,Friedman_chi2,Friedman_p,Friedman_sig,ImanDavenport_F,ImanDavenport_p,Iman_sig,Nemenyi_CD,rank_XGBoost,rank_LDA,rank_LinearSVC,rank_RandomForest
+DB7,22,4,4.9636,0.174479,n.s.,1.7078,0.174435,n.s.,1.0,2.23,2.91,2.18,2.68
+DB3,11,4,24.4909,2e-05,***,28.7821,0.0,***,1.414,1.91,4.0,2.64,1.45
+DB2,40,4,39.69,0.0,***,19.2742,0.0,***,0.742,1.52,3.15,2.33,3.0

@@ -1,0 +1,113 @@
+{
+  "database": "db3",
+  "db_label": "DB3",
+  "n_subjects": 11,
+  "top10": [
+    {
+      "Feature": "MAV3_Ch11",
+      "Mean_|SHAP|": 0.03129515624142203,
+      "Proportion_%": 1.47
+    },
+    {
+      "Feature": "TKEO_Ch12",
+      "Mean_|SHAP|": 0.02982340423585056,
+      "Proportion_%": 1.4
+    },
+    {
+      "Feature": "WL_Ch12",
+      "Mean_|SHAP|": 0.027589687242039685,
+      "Proportion_%": 1.3
+    },
+    {
+      "Feature": "ZC_Ch2",
+      "Mean_|SHAP|": 0.02743573840550154,
+      "Proportion_%": 1.29
+    },
+    {
+      "Feature": "TKEO_Ch11",
+      "Mean_|SHAP|": 0.026114554973351054,
+      "Proportion_%": 1.23
+    },
+    {
+      "Feature": "V_order_Ch12",
+      "Mean_|SHAP|": 0.026031739456735183,
+      "Proportion_%": 1.23
+    },
+    {
+      "Feature": "AAC_Ch11",
+      "Mean_|SHAP|": 0.02380035367224677,
+      "Proportion_%": 1.12
+    },
+    {
+      "Feature": "WL_Ch11",
+      "Mean_|SHAP|": 0.022221151785494882,
+      "Proportion_%": 1.05
+    },
+    {
+      "Feature": "ZC_Ch1",
+      "Mean_|SHAP|": 0.02027732768014663,
+      "Proportion_%": 0.95
+    },
+    {
+      "Feature": "TM5_Ch12",
+      "Mean_|SHAP|": 0.01942584321104888,
+      "Proportion_%": 0.91
+    }
+  ],
+  "groups": [
+    {
+      "Group": "Histogram",
+      "Total_|SHAP|": 0.5817,
+      "Proportion_%": 27.38,
+      "N_Features": 120
+    },
+    {
+      "Group": "Wavelength / ZC / SSC",
+      "Total_|SHAP|": 0.3688,
+      "Proportion_%": 17.36,
+      "N_Features": 36
+    },
+    {
+      "Group": "Slope / Amplitude",
+      "Total_|SHAP|": 0.3433,
+      "Proportion_%": 16.16,
+      "N_Features": 60
+    },
+    {
+      "Group": "Higher Moments",
+      "Total_|SHAP|": 0.3313,
+      "Proportion_%": 15.6,
+      "N_Features": 54
+    },
+    {
+      "Group": "MAV / RMS / Energy",
+      "Total_|SHAP|": 0.2863,
+      "Proportion_%": 13.48,
+      "N_Features": 104
+    },
+    {
+      "Group": "TKEO",
+      "Total_|SHAP|": 0.1097,
+      "Proportion_%": 5.17,
+      "N_Features": 12
+    },
+    {
+      "Group": "MAV Variants",
+      "Total_|SHAP|": 0.1061,
+      "Proportion_%": 5.0,
+      "N_Features": 36
+    },
+    {
+      "Group": "Variance / SSI",
+      "Total_|SHAP|": 0.0833,
+      "Proportion_%": 3.92,
+      "N_Features": 36
+    },
+    {
+      "Group": "AR Coefficients",
+      "Total_|SHAP|": 0.0,
+      "Proportion_%": 0.0,
+      "N_Features": 0
+    }
+  ]
+}

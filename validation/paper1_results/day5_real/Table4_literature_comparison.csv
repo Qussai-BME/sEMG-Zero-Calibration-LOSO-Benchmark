@@ -1,0 +1,10 @@
+Study,Method,DB,Protocol,Movements,Accuracy_%,Features,Type
+Ours (2026),420D features + XGBoost,DB2,LOSO (40 subjects),49 (B+C+D),54.64,Hand-crafted (420D),Classical ML
+Ours (2026),420D features + XGBoost,DB2,LOSO (40 subjects),34 (B+C only),54.64,Hand-crafted (420D),Classical ML
+SSL+Adversarial (2025),Semi-supervised + adversarial training,DB2,LOSO,~50,89.4,Learned (raw EMG),Deep Learning
+CNN-MSTINet (2025),Multi-Scale Temporal Interpretable Network,DB2,LOSO,~50,85.77,Learned (raw EMG),Deep Learning
+MSDS-FusionNet (2026),Multi-Domain Spectral Fusion Network,DB2,LOSO,~50,85.72,Learned (raw EMG + freq),Deep Learning
+Ours (2026),420D features + XGBoost,DB7,LOSO (20 subjects),40,65.96,Hand-crafted (420D),Classical ML
+Fatayer et al. (2024),Temporal CNN features,DB7,Cross-subject,40,64.3,Hybrid (CNN + hand-crafted),Deep Learning
+Ours (2026),420D features + XGBoost,DB3,LOSO (11 subjects),49 (B+C+D),43.46,Hand-crafted (420D),Classical ML
+Fatayer et al. (2024),Temporal CNN features,DB3,Cross-subject,~50,~45,Hybrid (CNN + hand-crafted),Deep Learning

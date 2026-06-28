@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering
+\caption{Feature Ablation --- Wilcoxon Signed-Rank Tests (DB7, 22-fold LOSO)}
+\label{tab:feature_stats}
+\begin{tabular}{llrrrrr}
+\toprule
+Classifier & Config & $\Delta$Acc (\%) & $p$ & $p_{adj}$ & $d$ & Sig. \\
+\midrule
+XGBoost & {-ICC} vs Full & 0.29 & 0.0037 & 0.0148 & 0.74 & Yes \\
+XGBoost & {-TKEO} vs Full & -0.02 & 0.6494 & 1.0000 & 0.03 & No \\
+XGBoost & {-Hjorth} vs Full & -0.06 & 0.7502 & 1.0000 & 0.18 & No \\
+XGBoost & {-Freq} vs Full & -0.01 & 0.8967 & 0.8967 & 0.02 & No \\
+\midrule
+LDA & {-ICC} vs Full & 0.51 & 0.0003 & 0.0013 & 1.43 & Yes \\
+LDA & {-TKEO} vs Full & 0.02 & 0.5235 & 1.0000 & 0.08 & No \\
+LDA & {-Hjorth} vs Full & -0.04 & 0.6494 & 0.6494 & 0.17 & No \\
+LDA & {-Freq} vs Full & 0.14 & 0.0329 & 0.0987 & 0.46 & No \\
+\bottomrule
+\end{tabular}
+\end{table}

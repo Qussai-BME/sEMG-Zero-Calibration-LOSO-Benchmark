@@ -1,0 +1,19 @@
+Database,DB_Short,Comparison,Raw_p,Adj_p,Rejected,Sig
+ninapro_db7,DB7,XGBoost vs RandomForest,0.003239154815673828,0.01943492889404297,True,*
+ninapro_db7,DB7,XGBoost vs LinearSVC,0.06844425201416016,0.3422212600708008,False,n.s.
+ninapro_db7,DB7,XGBoost vs LDA,0.42448854446411133,1.0,False,n.s.
+ninapro_db7,DB7,LinearSVC vs RandomForest,0.42448854446411133,1.0,False,n.s.
+ninapro_db7,DB7,LDA vs RandomForest,0.5235109329223633,1.0,False,n.s.
+ninapro_db7,DB7,LDA vs LinearSVC,0.8736042976379395,0.8736042976379395,False,n.s.
+ninapro_db3,DB3,XGBoost vs LDA,0.0009765625,0.005859375,True,**
+ninapro_db3,DB3,LDA vs LinearSVC,0.0009765625,0.0048828125,True,**
+ninapro_db3,DB3,LDA vs RandomForest,0.0009765625,0.00390625,True,**
+ninapro_db3,DB3,LinearSVC vs RandomForest,0.0048828125,0.0146484375,True,*
+ninapro_db3,DB3,XGBoost vs LinearSVC,0.009765625,0.01953125,True,*
+ninapro_db3,DB3,XGBoost vs RandomForest,0.3203125,0.3203125,False,n.s.
+ninapro_db2,DB2,XGBoost vs RandomForest,1.3860699255019426e-09,8.316419553011656e-09,True,***
+ninapro_db2,DB2,XGBoost vs LDA,6.460686563514173e-08,3.2303432817570865e-07,True,***
+ninapro_db2,DB2,XGBoost vs LinearSVC,3.545586332620587e-05,0.0001418234533048235,True,***
+ninapro_db2,DB2,LDA vs LinearSVC,0.0001315457593591418,0.00039463727807742544,True,***
+ninapro_db2,DB2,LinearSVC vs RandomForest,0.01852677657188906,0.03705355314377812,True,*
+ninapro_db2,DB2,LDA vs RandomForest,0.12810258085846726,0.12810258085846726,False,n.s.

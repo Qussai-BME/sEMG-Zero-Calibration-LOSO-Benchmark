@@ -1,0 +1,73 @@
+{
+  "db": "ninapro_db3",
+  "fold": 10,
+  "results_so_far": {
+    "S1": {
+      "accuracy": 0.0322,
+      "best_val": 0.0322,
+      "epochs": 14,
+      "time_min": 60.5
+    },
+    "S2": {
+      "accuracy": 0.0459,
+      "best_val": 0.0459,
+      "epochs": 13,
+      "time_min": 57.8
+    },
+    "S3": {
+      "accuracy": 0.0203,
+      "best_val": 0.0203,
+      "epochs": 24,
+      "time_min": 83.1
+    },
+    "S4": {
+      "accuracy": 0.0372,
+      "best_val": 0.0372,
+      "epochs": 13,
+      "time_min": 57.4
+    },
+    "S5": {
+      "accuracy": 0.0562,
+      "best_val": 0.0562,
+      "epochs": 22,
+      "time_min": 91.4
+    },
+    "S6": {
+      "accuracy": 0.0324,
+      "best_val": 0.0324,
+      "epochs": 23,
+      "time_min": 93.9
+    },
+    "S7": {
+      "accuracy": 0.037,
+      "best_val": 0.037,
+      "epochs": 30,
+      "time_min": 122.0
+    },
+    "S8": {
+      "accuracy": 0.0528,
+      "best_val": 0.0528,
+      "epochs": 15,
+      "time_min": 61.4
+    },
+    "S9": {
+      "accuracy": 0.076,
+      "best_val": 0.076,
+      "epochs": 15,
+      "time_min": 70.6
+    },
+    "S10": {
+      "accuracy": 0.0544,
+      "best_val": 0.0544,
+      "epochs": 30,
+      "time_min": 105.1
+    },
+    "S11": {
+      "accuracy": 0.0716,
+      "best_val": 0.0716,
+      "epochs": 15,
+      "time_min": 60.4
+    }
+  },
+  "timestamp": "2026-05-31 03:51:15"
+}

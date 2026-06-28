@@ -1,0 +1,10 @@
+Group,Total_|SHAP|,Proportion_%,N_Features
+Histogram,0.9437,24.4,115
+MAV / RMS / Energy,0.8771,22.68,108
+Slope / Amplitude,0.707,18.28,60
+Wavelength / ZC / SSC,0.4939,12.77,36
+Higher Moments,0.4625,11.96,54
+MAV Variants,0.3017,7.8,36
+Variance / SSI,0.1535,3.97,36
+TKEO,0.0822,2.13,11
+AR Coefficients,0.0,0.0,0

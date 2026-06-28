@@ -1,0 +1,87 @@
+{
+  "phase": "",
+  "experiments": [
+    {
+      "phase": "feature",
+      "feature_config": "Full",
+      "classifier": "XGBoost",
+      "status": "completed",
+      "accuracy": 0.659598138872837,
+      "elapsed_seconds": 9200.884860515594
+    },
+    {
+      "phase": "feature",
+      "feature_config": "Full",
+      "classifier": "LDA",
+      "status": "completed",
+      "accuracy": 0.65549180887864,
+      "elapsed_seconds": 1173.6311314105988
+    },
+    {
+      "phase": "feature",
+      "feature_config": "noICC",
+      "classifier": "XGBoost",
+      "status": "completed",
+      "accuracy": 0.6566486590950678,
+      "elapsed_seconds": 11570.419850587845
+    },
+    {
+      "phase": "feature",
+      "feature_config": "noICC",
+      "classifier": "LDA",
+      "status": "completed",
+      "accuracy": 0.6503765299595907,
+      "elapsed_seconds": 1154.966979265213
+    },
+    {
+      "phase": "feature",
+      "feature_config": "noTKEO",
+      "classifier": "XGBoost",
+      "status": "completed",
+      "accuracy": 0.6597616040261521,
+      "elapsed_seconds": 12463.35553407669
+    },
+    {
+      "phase": "feature",
+      "feature_config": "noTKEO",
+      "classifier": "LDA",
+      "status": "completed",
+      "accuracy": 0.6552738951984958,
+      "elapsed_seconds": 1073.1892673969269
+    },
+    {
+      "phase": "feature",
+      "feature_config": "noHjorth",
+      "classifier": "XGBoost",
+      "status": "completed",
+      "accuracy": 0.6601572534407417,
+      "elapsed_seconds": 13008.8861951828
+    },
+    {
+      "phase": "feature",
+      "feature_config": "noHjorth",
+      "classifier": "LDA",
+      "status": "completed",
+      "accuracy": 0.6559035673304392,
+      "elapsed_seconds": 1057.6524257659912
+    },
+    {
+      "phase": "feature",
+      "feature_config": "noFreq",
+      "classifier": "XGBoost",
+      "status": "completed",
+      "accuracy": 0.659693907599613,
+      "elapsed_seconds": 10379.70755147934
+    },
+    {
+      "phase": "feature",
+      "feature_config": "noFreq",
+      "classifier": "LDA",
+      "status": "completed",
+      "accuracy": 0.6540952437507778,
+      "elapsed_seconds": 964.8246433734894
+    }
+  ],
+  "started_at": "2026-05-19T11:49:24.317744",
+  "last_update": "2026-05-20T02:30:12.563041"
+}

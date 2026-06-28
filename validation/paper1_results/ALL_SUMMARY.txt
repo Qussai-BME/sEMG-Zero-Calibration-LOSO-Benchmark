@@ -1,0 +1,90 @@
+Paper 1 — Days 1+2 Complete Analysis Summary
+Generated: 2026-05-20 06:20
+
+============================================================
+DAY 1: MAIN RESULTS (4 Classifiers x 3 Databases)
+============================================================
+
+  NinaPro DB7 (mixed) (n=22, 41 classes):
+    XGBoost       : Acc=65.97+/-5.96%, MacroF1=28.18%, PerSubjAcc=[63.4,56.3,67.9,57.9,72.4...]
+    LDA           : Acc=65.41+/-5.84%, MacroF1=29.10%, PerSubjAcc=[61.4,56.5,68.0,58.3,73.5...]
+    LinearSVC     : Acc=65.75+/-5.80%, MacroF1=27.33%, PerSubjAcc=[61.1,56.6,66.8,58.7,72.2...]
+    RandomForest  : Acc=65.70+/-5.71%, MacroF1=26.53%, PerSubjAcc=[61.5,56.6,69.9,57.4,71.8...]
+
+  NinaPro DB3 (amputee) (n=11, 41 classes):
+    XGBoost       : Acc=43.46+/-10.73%, MacroF1=4.17%, PerSubjAcc=[50.2,46.8,61.3,32.0,39.9...]
+    LDA           : Acc=32.69+/-17.52%, MacroF1=5.29%, PerSubjAcc=[48.5,44.3,2.2,30.7,33.8...]
+    LinearSVC     : Acc=40.34+/-13.97%, MacroF1=4.88%, PerSubjAcc=[49.0,47.3,59.5,31.2,36.2...]
+    RandomForest  : Acc=43.64+/-10.54%, MacroF1=3.71%, PerSubjAcc=[50.0,47.2,61.7,32.5,39.9...]
+
+  NinaPro DB2 (intact) (n=40, 41 classes):
+    XGBoost       : Acc=54.64+/-7.84%, MacroF1=22.59%, PerSubjAcc=[66.3,59.5,49.5,44.1,66.3...]
+    LDA           : Acc=53.00+/-7.26%, MacroF1=22.18%, PerSubjAcc=[65.2,56.5,50.8,41.4,63.6...]
+    LinearSVC     : Acc=53.97+/-7.94%, MacroF1=19.64%, PerSubjAcc=[66.0,57.9,49.8,42.7,65.4...]
+    RandomForest  : Acc=53.64+/-8.08%, MacroF1=19.82%, PerSubjAcc=[65.4,59.1,48.7,42.4,64.9...]
+
+============================================================
+DAY 1: FRIEDMAN + NEMENYI
+============================================================
+  DB7: Friedman chi2=109.200, p=1.0000 (n.s.), Gap=0.56%
+    Ranks: XGBoost=2.77, LDA=2.09, LinearSVC=2.82, RandomForest=2.32
+  DB3: Friedman chi2=269.400, p=1.0000 (n.s.), Gap=10.95%
+    Ranks: XGBoost=3.09, LDA=1.00, LinearSVC=2.36, RandomForest=3.55
+  DB2: Friedman chi2=1587.600, p=1.0000 (n.s.), Gap=1.64%
+    Ranks: XGBoost=3.48, LDA=1.85, LinearSVC=2.67, RandomForest=2.00
+
+============================================================
+DAY 2: WINDOW ABLATION (DB7, 7 sizes x 4 clf)
+============================================================
+  100ms: 64.52%, 63.56%, 64.06%, 63.90%
+  150ms: 64.89%, 64.00%, 64.41%, 64.38%
+  200ms: 65.27%, 64.46%, 64.80%, 64.59%
+  250ms: 65.33%, 64.75%, 64.98%, 64.82%
+  300ms: 65.73%, 65.04%, 65.20%, 65.08%
+  400ms: 65.96%, 65.55%, 65.50%, 65.26%
+  500ms: 66.25%, 65.98%, 65.75%, 65.70%
+
+============================================================
+DAY 2: FEATURE ABLATION (DB7, 5 configs x 2 clf)
+============================================================
+  Full (420D)   : 65.96%, 65.55%
+  {-ICC}        : 65.66%, 65.04%
+  {-TKEO}       : 65.98%, 65.53%
+  {-Hjorth}     : 66.02%, 65.59%
+  {-Freq}       : 65.97%, 65.41%
+
+============================================================
+FILES GENERATED
+============================================================
+  Table2_main_results.csv (2.1 KB)
+  TableS1_per_subject_results.csv (15.8 KB)
+  TableS2_statistical_tests.csv (2.8 KB)
+  TableS3_friedman_test.csv (0.3 KB)
+  TableS4_holm_sidak_correction.csv (1.5 KB)
+  TableS6_feature_per_class_f1.csv (0.7 KB)
+  TableS6_window_per_class_f1.csv (0.7 KB)
+  Table_feature_ablation.csv (0.4 KB)
+  Table_feature_ablation.tex (0.5 KB)
+  Table_feature_ablation_FULL.csv (0.3 KB)
+  Table_feature_ablation_FULL.tex (0.5 KB)
+  Table_feature_stats.csv (0.9 KB)
+  Table_feature_stats.tex (0.8 KB)
+  Table_per_class_f1.csv (3.7 KB)
+  Table_window_ablation.csv (0.7 KB)
+  Table_window_ablation.tex (0.9 KB)
+  Table_window_ablation_FULL.csv (0.7 KB)
+  Table_window_ablation_FULL.tex (1.1 KB)
+  Table_window_stats.csv (0.2 KB)
+  Table_window_stats.tex (0.4 KB)
+  _day2_feature_progress.json (2.3 KB)
+  _day2_window_progress.json (5.9 KB)
+  day2_summary.json (0.2 KB)
+  figure_cm_DB2_xgboost.png (85.6 KB)
+  figure_cm_DB3_randomforest.png (85.7 KB)
+  figure_cm_DB7_xgboost.png (87.0 KB)
+  figure_feature_ablation.png (133.8 KB)
+  figure_main_results.png (189.6 KB)
+  figure_per_class_f1.png (87.8 KB)
+  figure_window_ablation.png (188.2 KB)
+  statistical_summary.txt (2.3 KB)
+  tables_paper.tex (2.1 KB)

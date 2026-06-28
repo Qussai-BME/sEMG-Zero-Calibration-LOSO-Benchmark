@@ -1,0 +1,51 @@
+% ===== TABLE 2: Main LOSO Results =====
+\begin{table}[htbp]
+\caption{LOSO cross-validation results. Accuracy and Macro $F_1$ as mean $\pm$ std with 95\% CI. Best per database in \textbf{bold}.}
+\label{tab:main_results}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{llcccc}
+\toprule
+Classifier & Database & $N$ & Accuracy (\%) & Macro $F_1$ (\%) & 95\% CI \\
+\midrule
+\multicolumn{6}{l}{DB7 (mixed, 22 subjects)} \\
+\midrule
+\textbf{XGBoost} & DB7 & 22 & \textbf{65.96 $\pm$ 6.01} & \textbf{27.14 $\pm$ 8.86} & [63.29, 68.63] \\ 
+LDA & DB7 & 22 & 65.55 $\pm$ 5.78 & 28.92 $\pm$ 9.21 & [62.99, 68.11] \\ 
+LinearSVC & DB7 & 22 & 65.50 $\pm$ 5.86 & 25.57 $\pm$ 8.45 & [62.90, 68.09] \\ 
+RandomForest & DB7 & 22 & 65.26 $\pm$ 5.62 & 24.66 $\pm$ 8.18 & [62.77, 67.75] \\ 
+\midrule
+\multicolumn{6}{l}{DB3 (amputee, 11 subjects)} \\
+\midrule
+XGBoost & DB3 & 11 & 43.46 $\pm$ 10.73 & 4.01 $\pm$ 2.37 & [36.25, 50.67] \\ 
+LDA & DB3 & 11 & 32.69 $\pm$ 17.52 & 4.81 $\pm$ 2.74 & [20.92, 44.46] \\ 
+LinearSVC & DB3 & 11 & 40.34 $\pm$ 13.97 & 4.56 $\pm$ 2.21 & [30.95, 49.72] \\ 
+\textbf{RandomForest} & DB3 & 11 & \textbf{43.64 $\pm$ 10.54} & \textbf{3.72 $\pm$ 2.08} & [36.56, 50.72] \\ 
+\midrule
+\multicolumn{6}{l}{DB2 (intact, 40 subjects)} \\
+\midrule
+\textbf{XGBoost} & DB2 & 40 & \textbf{54.64 $\pm$ 7.84} & \textbf{21.89 $\pm$ 3.73} & [52.13, 57.15] \\ 
+LDA & DB2 & 40 & 53.00 $\pm$ 7.26 & 21.77 $\pm$ 4.24 & [50.67, 55.32] \\ 
+LinearSVC & DB2 & 40 & 53.97 $\pm$ 7.94 & 19.48 $\pm$ 3.89 & [51.44, 56.51] \\ 
+RandomForest & DB2 & 40 & 53.64 $\pm$ 8.08 & 19.39 $\pm$ 3.78 & [51.06, 56.23] \\ 
+\midrule
+\bottomrule
+}
+}
+\end{table}
+
+% ===== TABLE 3: Friedman Test =====
+\begin{table}[htbp]
+\caption{Friedman test for overall classifier differences per database.}
+\label{tab:friedman}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Database & $N$ & $\chi^{2}_r$ & $p$-value & Significance \\
+\midrule
+DB7 (mixed, 22 subjects) & 22 & 4.909 & 0.1786 & n.s. \\ 
+DB3 (amputee, 11 subjects) & 11 & 24.491 & 0.0000 & *** \\ 
+DB2 (intact, 40 subjects) & 40 & 39.690 & 0.0000 & *** \\ 
+\bottomrule
+\end{tabular}
+\end{table}

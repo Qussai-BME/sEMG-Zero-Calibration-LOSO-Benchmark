@@ -1,0 +1,65 @@
+venv/
+__pycache__/
+*.log
+emg_engine.log
+data/
+notebooks/
+.DS_Store
+Thumbs.db
+results/
+__pycache__/
+*.pyc
+venv/
+.venv/
+.idea/
+.vscode/
+.DS_Store
+*.mat
+data/raw/
+checkpoint/*.pt
+checkpoint/*.pth
+*.tmp
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# NinaPro raw data — do NOT upload, download from http://ninaweb.hevs.ch
+*.mat
+data/raw/
+
+# Large model checkpoints — track with Git LFS instead if needed
+checkpoint/*.pt
+checkpoint/*.pth
+*.h5
+*.hdf5
+
+# Development-only artifacts excluded from the clean public repo
+paper1_backups/
+_run_progress/
+_day2_feature_progress/
+_day2_window_progress/
+
+# Cache / temp
+__cache__/
+*.tmp

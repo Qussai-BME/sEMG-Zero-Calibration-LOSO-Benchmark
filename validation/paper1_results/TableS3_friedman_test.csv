@@ -1,0 +1,4 @@
+Database,DB_Label,Chi2,p,Sig,N_Classifiers
+ninapro_db7,"DB7 (mixed, 22 subjects)",4.909090909090878,0.17857627777745497,n.s.,4
+ninapro_db3,"DB3 (amputee, 11 subjects)",24.49090909090907,1.9727179594849798e-05,***,4
+ninapro_db2,"DB2 (intact, 40 subjects)",39.68999999999994,1.2395451690946352e-08,***,4

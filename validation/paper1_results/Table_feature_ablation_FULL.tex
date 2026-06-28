@@ -1,0 +1,14 @@
+\begin{table}[htbp]
+\centering
+\caption{Feature Group Ablation on DB7 (Accuracy + Macro F1)}
+\label{tab:feature_ablation_full}
+Config & XGBoost Acc & XGBoost F1 & LDA Acc & LDA F1 \\
+\midrule
+Full (420D) & 65.96+/-6.01 & 28.28 & 65.55+/-5.78 & 29.52 \\
+{-ICC} & 65.66+/-5.90 & 27.47 & 65.04+/-5.72 & 28.10 \\
+{-TKEO} & 65.98+/-5.80 & 28.11 & 65.53+/-5.74 & 29.41 \\
+{-Hjorth} & 66.02+/-5.91 & 28.41 & 65.59+/-5.83 & 29.56 \\
+{-Freq} & 65.97+/-5.96 & 28.18 & 65.41+/-5.84 & 29.10 \\
+\bottomrule
+\end{tabular}
+\end{table}
