@@ -15,10 +15,10 @@ Following the same protocol as our feature-based classifiers,
 normalization statistics are computed exclusively from training subjects.
 
 Usage:
-  python day3_cnn1d_baseline.py --db ninapro_db7
-  python day3_cnn1d_baseline.py --db ninapro_db3
-  python day3_cnn1d_baseline.py --db ninapro_db2
-  python day3_cnn1d_baseline.py --db ninapro_db7 --fast --subjects 1,5,8
+  python 03_run_cnn1d_baseline.py --db ninapro_db7
+  python 03_run_cnn1d_baseline.py --db ninapro_db3
+  python 03_run_cnn1d_baseline.py --db ninapro_db2
+  python 03_run_cnn1d_baseline.py --db ninapro_db7 --fast --subjects 1,5,8
 """
 
 import os
@@ -47,8 +47,8 @@ warnings.filterwarnings("ignore")
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
 CONFIG_PATH = SCRIPT_DIR / "config.yaml"
-RESULTS_DIR = SCRIPT_DIR / "paper1_results"
-CKPT_DIR = RESULTS_DIR / "day3_checkpoints"
+RESULTS_DIR = SCRIPT_DIR / "results"
+CKPT_DIR = RESULTS_DIR / "loso_checkpoints"
 
 for d in [RESULTS_DIR, CKPT_DIR]:
     d.mkdir(parents=True, exist_ok=True)

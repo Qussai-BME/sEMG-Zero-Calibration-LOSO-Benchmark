@@ -32,10 +32,10 @@ plt.rcParams['axes.unicode_minus'] = False
 
 # ── Paths (auto-detect) ──
 SCRIPT_DIR = str(Path(__file__).resolve().parent)
-BASE = Path(SCRIPT_DIR) / 'paper1_results'
+BASE = Path(SCRIPT_DIR) / 'results'
 OUT  = BASE
 if not BASE.is_dir():
-    BASE = Path.cwd() / 'paper1_results'
+    BASE = Path.cwd() / 'results'
     OUT  = BASE
 
 CMAP = 'Blues'

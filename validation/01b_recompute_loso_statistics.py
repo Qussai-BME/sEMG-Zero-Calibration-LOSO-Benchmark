@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-day1_statistical_fix.py — Run statistical analysis on existing JSON results.
+01b_recompute_loso_statistics.py — Run statistical analysis on existing JSON results.
 No need to re-run experiments! Just point to the results directory.
 
 USAGE:
-  python day1_statistical_fix.py
-  python day1_statistical_fix.py "C:\path\to\paper1_results"
+  python 01b_recompute_loso_statistics.py
+  python 01b_recompute_loso_statistics.py "C:\path\to\results"
 """
 import os
 import sys
@@ -21,15 +21,15 @@ from itertools import combinations
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Auto-detect results directory
-if os.path.exists(os.path.join(SCRIPT_DIR, "paper1_results")):
-    RESULTS_DIR = os.path.join(SCRIPT_DIR, "paper1_results")
-elif os.path.exists(os.path.join(SCRIPT_DIR, "validation", "paper1_results")):
-    RESULTS_DIR = os.path.join(SCRIPT_DIR, "validation", "paper1_results")
+if os.path.exists(os.path.join(SCRIPT_DIR, "results")):
+    RESULTS_DIR = os.path.join(SCRIPT_DIR, "results")
+elif os.path.exists(os.path.join(SCRIPT_DIR, "validation", "results")):
+    RESULTS_DIR = os.path.join(SCRIPT_DIR, "validation", "results")
 elif len(sys.argv) > 1:
     RESULTS_DIR = sys.argv[1]
 else:
-    print("[ERROR] Cannot find paper1_results directory.")
-    print("  Usage: python day1_statistical_fix.py <path_to_paper1_results>")
+    print("[ERROR] Cannot find results directory.")
+    print("  Usage: python 01b_recompute_loso_statistics.py <path_to_results>")
     sys.exit(1)
 
 CLASSIFIERS = ['XGBoost', 'LDA', 'LinearSVC', 'RandomForest']

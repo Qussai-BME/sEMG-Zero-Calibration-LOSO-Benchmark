@@ -22,14 +22,14 @@ ALL fixes from v1-v7 included + NEW fixes:
 
 =============================================================
 Usage:
-  python day5_perclass_and_timing_v8.py --db db7 --task all
-  python day5_perclass_and_timing_v8.py --db db2 --task all
-  python day5_perclass_and_timing_v8.py --db db3 --task all
-  python day5_perclass_and_timing_v8.py --db db7 --task timing
-  python day5_perclass_and_timing_v8.py --db db7 --task timing --classifiers rf
-  python day5_perclass_and_timing_v8.py --db db7 --task all --fast
+  python 04_compute_perclass_f1_and_timing.py --db db7 --task all
+  python 04_compute_perclass_f1_and_timing.py --db db2 --task all
+  python 04_compute_perclass_f1_and_timing.py --db db3 --task all
+  python 04_compute_perclass_f1_and_timing.py --db db7 --task timing
+  python 04_compute_perclass_f1_and_timing.py --db db7 --task timing --classifiers rf
+  python 04_compute_perclass_f1_and_timing.py --db db7 --task all --fast
 
-Output: paper1_results/day5_real/
+Output: results/final_outputs/
 """
 
 import os
@@ -52,7 +52,7 @@ warnings.filterwarnings("ignore")
 # =============================================================================
 SCRIPT_DIR = Path(__file__).parent.resolve()
 CONFIG_PATH = SCRIPT_DIR / "config.yaml"
-OUT_DIR = SCRIPT_DIR / "paper1_results" / "day5_real"
+OUT_DIR = SCRIPT_DIR / "results" / "final_outputs"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # =============================================================================

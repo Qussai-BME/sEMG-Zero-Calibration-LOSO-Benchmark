@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-day2_feature_ablation.py — Feature Group Ablation Study on NinaPro DB7
+02b_run_feature_group_ablation.py — Feature Group Ablation Study on NinaPro DB7
 
 Paper 1, Day 2: Ablation Studies
 =================================
@@ -24,11 +24,11 @@ Feature group breakdown (with all ON):
 Total experiments: 10 (5 configs × 2 classifiers)
 
 Usage:
-    python day2_feature_ablation.py                        # Run all 10 experiments
-    python day2_feature_ablation.py --skip-existing         # Skip completed
-    python day2_feature_ablation.py --summary-only           # Generate summary only
+    python 02b_run_feature_group_ablation.py                        # Run all 10 experiments
+    python 02b_run_feature_group_ablation.py --skip-existing         # Skip completed
+    python 02b_run_feature_group_ablation.py --summary-only           # Generate summary only
 
-Output files (in paper1_results/):
+Output files (in results/):
     DB7_feat_{config}_{clf}_results.json   — Per-experiment full results
     Table_feature_ablation.csv             — Summary table
     Table_feature_ablation.tex             — LaTeX table
@@ -552,7 +552,7 @@ def parse_args():
     )
     parser.add_argument(
         '--output-dir', type=str, default=None,
-        help='Directory to save results (default: paper1_results/)'
+        help='Directory to save results (default: results/)'
     )
     parser.add_argument(
         '--classifiers', nargs='+', type=str, default=None,
@@ -587,7 +587,7 @@ def main():
 
     output_dir = args.output_dir
     if output_dir is None:
-        output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'paper1_results')
+        output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results')
     os.makedirs(output_dir, exist_ok=True)
 
     progress_file = os.path.join(output_dir, '_feature_ablation_progress.json')

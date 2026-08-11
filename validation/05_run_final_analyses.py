@@ -33,11 +33,11 @@ ALL v1-v12.2 fixes preserved:
 
 ==========================================================
 Usage:
-  python day6_final_analyses.py --db db7 --task all
-  python day6_final_analyses.py --db db7 --task shap --fast
-  python day6_final_analyses.py --db db7 --task confusion
-  python day6_final_analyses.py --db all --task tables       # Tables only, no model
-  python day6_final_analyses.py --db all --task all --fast    # Everything quick
+  python 05_run_final_analyses.py --db db7 --task all
+  python 05_run_final_analyses.py --db db7 --task shap --fast
+  python 05_run_final_analyses.py --db db7 --task confusion
+  python 05_run_final_analyses.py --db all --task tables       # Tables only, no model
+  python 05_run_final_analyses.py --db all --task all --fast    # Everything quick
 ==========================================================
 """
 
@@ -61,7 +61,7 @@ warnings.filterwarnings("ignore")
 # =============================================================================
 SCRIPT_DIR = Path(__file__).parent.resolve()
 CONFIG_PATH = SCRIPT_DIR / "config.yaml"
-OUT_DIR = SCRIPT_DIR / "paper1_results" / "day5_real"
+OUT_DIR = SCRIPT_DIR / "results" / "final_outputs"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # =============================================================================

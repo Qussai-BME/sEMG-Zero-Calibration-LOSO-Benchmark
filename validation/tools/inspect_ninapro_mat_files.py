@@ -1,4 +1,4 @@
-# validation/inspect_ninapro.py
+# validation/tools/inspect_ninapro_mat_files.py
 import scipy.io as sio
 import numpy as np
 import os

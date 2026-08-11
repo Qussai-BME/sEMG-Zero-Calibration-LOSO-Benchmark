@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 """
-diagnose_v2.py — Comprehensive Diagnostic & Baseline Fix for MiniROCKET on EMG
+[ARCHIVED / NOT PART OF THE REPORTED PIPELINE]
+This script explored a MiniROCKET-based classifier as an alternative to the
+hand-crafted-feature pipeline. That direction was not pursued further and the
+`minirocket` module it depends on was removed from the repository, so this
+script cannot currently be executed as-is. It is kept for provenance/transparency
+only. See dev_history/README.md. None of the results reported in the paper
+come from this script.
+------------------------------------------------------------------------------
+dev_history/diagnose_minirocket_exploration.py — Comprehensive Diagnostic & Baseline Fix for MiniROCKET on EMG
 ==============================================================================
 Based on literature analysis (2024-2025 SOTA on NinaPro DB2):
 
@@ -35,8 +43,8 @@ THIS SCRIPT:
   Phase 4: Full Movement Segmentation (Ovadia approach)
   
 Usage:
-  python diagnose_v2.py --config config.yaml --datasets ninapro_db2 --subjects 1
-  python diagnose_v2.py --config config.yaml --datasets ninapro_db3 --subjects 1 2
+  python dev_history/diagnose_minirocket_exploration.py --config config.yaml --datasets ninapro_db2 --subjects 1
+  python dev_history/diagnose_minirocket_exploration.py --config config.yaml --datasets ninapro_db3 --subjects 1 2
 """
 
 import sys
@@ -48,7 +56,8 @@ import numpy as np
 from collections import Counter
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, SCRIPT_DIR)
+VALIDATION_DIR = os.path.dirname(SCRIPT_DIR)
+sys.path.insert(0, VALIDATION_DIR)
 
 import yaml
 
@@ -60,7 +69,7 @@ from minirocket import MiniRocketPipeline
 # =====================================================================
 def parse_args():
     p = argparse.ArgumentParser(description="Diagnose MiniROCKET on EMG data")
-    p.add_argument('--config', type=str, default=os.path.join(SCRIPT_DIR, 'config.yaml'))
+    p.add_argument('--config', type=str, default=os.path.join(VALIDATION_DIR, 'config.yaml'))
     p.add_argument('--datasets', nargs='+', required=True,
                    choices=['ninapro_db2', 'ninapro_db3', 'ninapro_db7'])
     p.add_argument('--subjects', nargs='+', type=int, default=[1])
@@ -74,7 +83,7 @@ def parse_args():
 
 
 def load_config(path):
-    for candidate in [path, os.path.join(SCRIPT_DIR, 'config.yaml')]:
+    for candidate in [path, os.path.join(VALIDATION_DIR, 'config.yaml')]:
         if os.path.exists(candidate):
             with open(candidate, 'r', encoding='utf-8') as f:
                 return yaml.safe_load(f)

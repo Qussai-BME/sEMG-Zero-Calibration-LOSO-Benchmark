@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-day2_fix_all.py — FIX ALL GAPS FROM DAYS 1+2 (ZERO re-runs)
+02e_generate_posthoc_figures_and_tables.py — FIX ALL GAPS FROM DAYS 1+2 (ZERO re-runs)
 ============================================================
 Reads ALL existing JSON result files and generates everything
 that was missing:
@@ -12,9 +12,9 @@ that was missing:
   FIX #5: Comprehensive Nemenyi for Day 1 (inter-database)
 
 USAGE (run from validation/ folder):
-  python day2_fix_all.py
+  python 02e_generate_posthoc_figures_and_tables.py
 
-OUTPUT (in paper1_results/):
+OUTPUT (in results/):
   Day 1:
     figure_main_results.png          — Grouped bar chart (4 clf × 3 DB)
     figure_cm_DB7_xgboost.png        — Confusion matrices (best clf per DB)
@@ -49,10 +49,10 @@ from datetime import datetime
 # AUTO-DETECT PATHS
 # ============================================================================
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-if os.path.exists(os.path.join(SCRIPT_DIR, "paper1_results")):
-    RESULTS_DIR = os.path.join(SCRIPT_DIR, "paper1_results")
-elif os.path.exists(os.path.join(os.path.dirname(SCRIPT_DIR), "paper1_results")):
-    RESULTS_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "paper1_results")
+if os.path.exists(os.path.join(SCRIPT_DIR, "results")):
+    RESULTS_DIR = os.path.join(SCRIPT_DIR, "results")
+elif os.path.exists(os.path.join(os.path.dirname(SCRIPT_DIR), "results")):
+    RESULTS_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "results")
 else:
     RESULTS_DIR = SCRIPT_DIR  # fallback
 

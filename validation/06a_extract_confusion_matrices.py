@@ -18,9 +18,9 @@ Output:
   - Also: per-subject accuracy bar plots
 
 Usage:
-  python extract_confusion_matrices.py              # all DBs
-  python extract_confusion_matrices.py --db db3      # DB3 only
-  python extract_confusion_matrices.py --db all --pdf  # PDF output
+  python 06a_extract_confusion_matrices.py              # all DBs
+  python 06a_extract_confusion_matrices.py --db db3      # DB3 only
+  python 06a_extract_confusion_matrices.py --db all --pdf  # PDF output
 """
 
 import os
@@ -57,12 +57,12 @@ plt.rcParams['axes.unicode_minus'] = False
 
 # ── Paths ─────────────────────────────────────────────────────────
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-RESULTS_DIR = os.path.join(SCRIPT_DIR, 'paper1_results')
+RESULTS_DIR = os.path.join(SCRIPT_DIR, 'results')
 OUTPUT_DIR  = RESULTS_DIR
 
-# Fallback: if paper1_results not found next to script, try current dir
+# Fallback: if results not found next to script, try current dir
 if not os.path.isdir(RESULTS_DIR):
-    RESULTS_DIR = os.path.join(os.getcwd(), 'paper1_results')
+    RESULTS_DIR = os.path.join(os.getcwd(), 'results')
     OUTPUT_DIR  = RESULTS_DIR
 
 # Movement names for NinaPro DB7 mapping (41 classes)

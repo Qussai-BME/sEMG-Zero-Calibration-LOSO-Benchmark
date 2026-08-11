@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-day2_window_ablation.py — Window Size Ablation Study on NinaPro DB7
+02a_run_window_size_ablation.py — Window Size Ablation Study on NinaPro DB7
 
 Paper 1, Day 2: Ablation Studies
 =================================
@@ -11,12 +11,12 @@ Total experiments: 28 (7 window sizes × 4 classifiers)
 Default window (200ms) results already exist from Day 1 — re-run for consistency.
 
 Usage:
-    python day2_window_ablation.py                           # Run all 28 experiments
-    python day2_window_ablation.py --skip-existing          # Skip completed experiments
-    python day2_window_ablation.py --classifiers XGBoost LDA  # Run only 2 classifiers
-    python day2_window_ablation.py --windows 100 200 300     # Run only 3 window sizes
+    python 02a_run_window_size_ablation.py                           # Run all 28 experiments
+    python 02a_run_window_size_ablation.py --skip-existing          # Skip completed experiments
+    python 02a_run_window_size_ablation.py --classifiers XGBoost LDA  # Run only 2 classifiers
+    python 02a_run_window_size_ablation.py --windows 100 200 300     # Run only 3 window sizes
 
-Output files (in paper1_results/):
+Output files (in results/):
     DB7_window_{ms}_{clf}_results.json    — Per-experiment full results
     Table_window_ablation.csv             — Summary table
     Table_window_ablation.tex             — LaTeX table
@@ -488,7 +488,7 @@ def parse_args():
     )
     parser.add_argument(
         '--output-dir', type=str, default=None,
-        help='Directory to save results (default: paper1_results/ next to script)'
+        help='Directory to save results (default: results/ next to script)'
     )
     parser.add_argument(
         '--windows', nargs='+', type=int, default=None,
@@ -528,7 +528,7 @@ def main():
 
     output_dir = args.output_dir
     if output_dir is None:
-        output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'paper1_results')
+        output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results')
     os.makedirs(output_dir, exist_ok=True)
 
     progress_file = os.path.join(output_dir, '_window_ablation_progress.json')

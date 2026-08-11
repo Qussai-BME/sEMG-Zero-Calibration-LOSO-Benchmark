@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-day2_statistical_analysis.py — Statistical Analysis for Ablation Studies
+02c_analyze_ablation_statistics.py — Statistical Analysis for Ablation Studies
 
 Paper 1, Day 2: Ablation Studies
 =================================
@@ -20,12 +20,12 @@ Reads JSON results from both window and feature ablation studies and generates:
 All tests use per-subject accuracy (22 values for DB7).
 
 Usage:
-    python day2_statistical_analysis.py                        # Analyze both ablations
-    python day2_statistical_analysis.py --window-only           # Window ablation only
-    python day2_statistical_analysis.py --feature-only          # Feature ablation only
-    python day2_statistical_analysis.py --results-dir ./paper1_results/
+    python 02c_analyze_ablation_statistics.py                        # Analyze both ablations
+    python 02c_analyze_ablation_statistics.py --window-only           # Window ablation only
+    python 02c_analyze_ablation_statistics.py --feature-only          # Feature ablation only
+    python 02c_analyze_ablation_statistics.py --results-dir ./results/
 
-Output files (in paper1_results/):
+Output files (in results/):
     Table_window_stats.csv          — Friedman + Nemenyi results
     Table_window_stats.tex          — LaTeX version
     Table_feature_stats.csv         — Wilcoxon + Cohen's d results
@@ -45,18 +45,18 @@ from datetime import datetime
 # Import handling
 # ============================================================================
 def _find_results_dir():
-    """Find the paper1_results directory."""
+    """Find the results directory."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     candidates = [
-        os.path.join(script_dir, 'paper1_results'),
-        os.path.join(os.path.dirname(script_dir), 'paper1_results'),
-        os.path.join(script_dir, 'validation', 'paper1_results'),
+        os.path.join(script_dir, 'results'),
+        os.path.join(os.path.dirname(script_dir), 'results'),
+        os.path.join(script_dir, 'validation', 'results'),
     ]
     for candidate in candidates:
         if os.path.isdir(candidate):
             return candidate
     # Fallback: use script dir
-    return os.path.join(script_dir, 'paper1_results')
+    return os.path.join(script_dir, 'results')
 
 
 # ============================================================================
@@ -372,7 +372,7 @@ def analyze_window_ablation(results_dir):
 
     data = load_window_results(results_dir)
     if not data:
-        print("  ERROR: No window ablation results found. Run day2_window_ablation.py first.", flush=True)
+        print("  ERROR: No window ablation results found. Run 02a_run_window_size_ablation.py first.", flush=True)
         return
 
     csv_rows = []
@@ -504,7 +504,7 @@ def analyze_feature_ablation(results_dir):
 
     data = load_feature_results(results_dir)
     if not data:
-        print("  ERROR: No feature ablation results found. Run day2_feature_ablation.py first.", flush=True)
+        print("  ERROR: No feature ablation results found. Run 02b_run_feature_group_ablation.py first.", flush=True)
         return
 
     csv_rows = []

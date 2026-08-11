@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-day1_all_in_one.py — THE COMPLETE DAY 1 SOLUTION
+01a_run_loso_benchmark.py — THE COMPLETE DAY 1 SOLUTION
 =================================================
 Does EVERYTHING in ONE run:
 
@@ -10,10 +10,10 @@ Does EVERYTHING in ONE run:
 4. Generates ALL statistical analysis files
 
 USAGE (works from anywhere):
-  python validation/day1_all_in_one.py   # from project root
-  cd validation && python day1_all_in_one.py  # from inside validation/
+  python validation/01a_run_loso_benchmark.py   # from project root
+  cd validation && python 01a_run_loso_benchmark.py  # from inside validation/
 
-OUTPUT (in validation/paper1_results/):
+OUTPUT (in validation/results/):
   - *_results.json          (per classifier × per database = 12 files)
   - Table2_main_results.csv
   - TableS1_per_subject_results.csv
@@ -56,7 +56,7 @@ else:
 METRICS_PATH = os.path.join(VALIDATION_DIR, "metrics.py")
 VALIDATE_PATH = os.path.join(VALIDATION_DIR, "validate_engine.py")
 CONFIG_PATH = os.path.join(VALIDATION_DIR, "config.yaml")
-RESULTS_DIR = os.path.join(VALIDATION_DIR, "paper1_results")
+RESULTS_DIR = os.path.join(VALIDATION_DIR, "results")
 BACKUP_DIR = os.path.join(VALIDATION_DIR, "paper1_backups")
 
 CLASSIFIERS = ['XGBoost', 'LDA', 'LinearSVC', 'RandomForest']
@@ -330,8 +330,8 @@ def patch_validate_engine():
         print(f"[warn] Failed to save JSON: {_je}", flush=True)
 
     """
-    if search2d in content and "paper1_results" not in content:
-        # Also redirect output to paper1_results
+    if search2d in content and "results" not in content:
+        # Also redirect output to results
         content = content.replace(
             search2d,
             json_save_code + "return output_data, trained_models, X_tests, feat_names",
@@ -376,7 +376,7 @@ def run_all_experiments():
 
     config = load_config(CONFIG_PATH)
 
-    # Override output_dir to paper1_results
+    # Override output_dir to results
     config['output_dir'] = RESULTS_DIR
     os.makedirs(RESULTS_DIR, exist_ok=True)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-day2_all_in_one.py — THE COMPLETE DAY 2 SOLUTION (ONE COMMAND)
+02d_run_full_ablation_suite.py — THE COMPLETE DAY 2 SOLUTION (ONE COMMAND)
 ================================================================
 Runs ALL Day 2 experiments in a single command:
 
@@ -12,13 +12,13 @@ Total experiments: 38
 Estimated runtime: ~10-14 hours (resume-safe: re-run picks up where it left off)
 
 USAGE (works from anywhere):
-  python day2_all_in_one.py                        # Run everything
-  python day2_all_in_one.py --skip-existing        # Skip completed (default: YES)
-  python day2_all_in_one.py --phase window          # Only window ablation
-  python day2_all_in_one.py --phase feature         # Only feature ablation
-  python day2_all_in_one.py --phase stats           # Only statistical analysis
-  python day2_all_in_one.py --phase all             # Run all (default)
-  python day2_all_in_one.py --summary-only          # Generate summaries only
+  python 02d_run_full_ablation_suite.py                        # Run everything
+  python 02d_run_full_ablation_suite.py --skip-existing        # Skip completed (default: YES)
+  python 02d_run_full_ablation_suite.py --phase window          # Only window ablation
+  python 02d_run_full_ablation_suite.py --phase feature         # Only feature ablation
+  python 02d_run_full_ablation_suite.py --phase stats           # Only statistical analysis
+  python 02d_run_full_ablation_suite.py --phase all             # Run all (default)
+  python 02d_run_full_ablation_suite.py --summary-only          # Generate summaries only
 
 IMPORTANT CORRECTIONS from Day 1 review:
   - Feature dimensions: 438D pre-FS → 420D after FS (k=420)
@@ -26,7 +26,7 @@ IMPORTANT CORRECTIONS from Day 1 review:
   - Pre-FS breakdown: 312 (TD: 26x12) + 66 (ICC) + 12 (Corr) + 48 (TKEO) = 438D
   - DB3 = 29 movements (movement_map removes E3), DB7 = 41, DB2 = 41
 
-OUTPUT (in validation/paper1_results/):
+OUTPUT (in validation/results/):
   Window Ablation:
     DB7_window_{ms}_{clf}_results.json     (28 files)
     Table_window_ablation.csv
@@ -75,7 +75,7 @@ else:
     PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 
 CONFIG_PATH = os.path.join(VALIDATION_DIR, "config.yaml")
-RESULTS_DIR = os.path.join(VALIDATION_DIR, "paper1_results")
+RESULTS_DIR = os.path.join(VALIDATION_DIR, "results")
 
 print(f"[PATHS] Project root:    {PROJECT_ROOT}")
 print(f"[PATHS] Validation dir:  {VALIDATION_DIR}")
@@ -1117,7 +1117,7 @@ def main():
     except ImportError as e:
         print(f"\n  [FATAL] Cannot import validation engine: {e}")
         print(f"  Make sure this script is in the validation/ folder alongside config.yaml")
-        print(f"  Or run from project root: python validation/day2_all_in_one.py")
+        print(f"  Or run from project root: python validation/02d_run_full_ablation_suite.py")
         sys.exit(1)
 
     # ── Load config ──

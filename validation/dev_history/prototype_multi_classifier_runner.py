@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 """
-run_all_classifiers.py — Multi-Classifier Comparison under Strict LOSO
+[ARCHIVED / NOT PART OF THE REPORTED PIPELINE]
+Early prototype of the multi-classifier LOSO comparison (RandomForest, ExtraTrees,
+SVM). The classifier set and protocol here predate and differ from the final
+benchmark reported in the paper (XGBoost / LDA / LinearSVC / RandomForest, see
+01a_run_loso_benchmark.py). Kept for provenance/transparency only -- see
+dev_history/README.md. None of the results reported in the paper come from
+this script.
+------------------------------------------------------------------------------
+dev_history/prototype_multi_classifier_runner.py — Multi-Classifier Comparison under Strict LOSO
 =======================================================================
 
 Runs XGBoost, RandomForest, ExtraTrees, and SVM on the SAME hand-crafted
@@ -8,13 +16,13 @@ features, under IDENTICAL LOSO protocol. Outputs comparison table + JSON.
 
 Usage:
     # All subjects, multiple datasets:
-    python validation/run_all_classifiers.py --config config.yaml --datasets ninapro_db3 ninapro_db2 ninapro_db7
+    python validation/dev_history/prototype_multi_classifier_runner.py --config config.yaml --datasets ninapro_db3 ninapro_db2 ninapro_db7
 
     # Quick test (4 subjects only):
-    python validation/run_all_classifiers.py --config config.yaml --datasets ninapro_db3 --subjects 1 2 3 4
+    python validation/dev_history/prototype_multi_classifier_runner.py --config config.yaml --datasets ninapro_db3 --subjects 1 2 3 4
 
     # Specific classifiers only:
-    python validation/run_all_classifiers.py --config config.yaml --datasets ninapro_db3 --classifiers XGBoost ExtraTrees
+    python validation/dev_history/prototype_multi_classifier_runner.py --config config.yaml --datasets ninapro_db3 --classifiers XGBoost ExtraTrees
 """
 
 import sys
@@ -27,9 +35,14 @@ import numpy as np
 from datetime import datetime
 
 # ── Add project root to path ─────────────────────────────────────────
+# NOTE: this script lives one level deeper than it used to (validation/dev_history/
+# instead of validation/), because it has been archived here as superseded/exploratory
+# code. SCRIPT_DIR/VALIDATION_DIR/PROJECT_ROOT below are adjusted for that extra
+# nesting level only -- nothing about the experiment logic itself has changed.
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
-sys.path.insert(0, SCRIPT_DIR)
+VALIDATION_DIR = os.path.dirname(SCRIPT_DIR)
+PROJECT_ROOT = os.path.dirname(VALIDATION_DIR)
+sys.path.insert(0, VALIDATION_DIR)
 sys.path.insert(0, PROJECT_ROOT)
 
 import yaml
@@ -62,7 +75,7 @@ def parse_args():
         description="Multi-Classifier LOSO Comparison"
     )
     p.add_argument('--config', type=str,
-                   default=os.path.join(SCRIPT_DIR, 'config.yaml'))
+                   default=os.path.join(VALIDATION_DIR, 'config.yaml'))
     p.add_argument('--datasets', nargs='+', required=True,
                    choices=['ninapro_db2', 'ninapro_db3', 'ninapro_db7'])
     p.add_argument('--subjects', nargs='+', type=int, default=None)
@@ -82,8 +95,8 @@ def load_config(path):
     if os.path.exists(path):
         with open(path, 'r', encoding='utf-8') as f:
             return yaml.safe_load(f)
-    # Fallback: try relative to SCRIPT_DIR
-    fallback = os.path.join(SCRIPT_DIR, os.path.basename(path))
+    # Fallback: try relative to VALIDATION_DIR
+    fallback = os.path.join(VALIDATION_DIR, os.path.basename(path))
     if os.path.exists(fallback):
         with open(fallback, 'r', encoding='utf-8') as f:
             return yaml.safe_load(f)
