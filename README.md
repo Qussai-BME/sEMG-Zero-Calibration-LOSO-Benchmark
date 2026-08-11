@@ -48,7 +48,7 @@ Four classical classifiers (XGBoost, LDA, LinearSVC, Random Forest) and a naive 
 - **Rest-class dominance:** on DB3, accuracy (43.46%) and macro-F1 (4.01%) diverge by ~39.86 pp — Rest recall is 97.5% while active-gesture accuracy is only 3.6%. This is, to our knowledge, the first explicit quantification of this effect on transradial amputees with active-only confusion matrices.
 - SHAP analysis identifies amplitude-distribution (Histogram) features as the dominant cross-subject discriminator in **all three** databases (23.6–26.3%); AR coefficients contribute ~0% everywhere (hypothesis for future ablation — not yet experimentally validated; see §5.5/§5.7 of the paper).
 
-Full statistical tests (Friedman, Nemenyi, Wilcoxon + Holm–Šidák, Cohen's d), the feature-group and window-size ablations, per-subject variability analysis, and CPU timing benchmarks are reported in the paper (Tables 3–14) and reproduced in [`results/`](#repository-structure) below.
+Full statistical tests (Friedman, Nemenyi, Wilcoxon + Holm–Šidák, Cohen's d), the feature-group and window-size ablations, per-subject variability analysis, and CPU timing benchmarks are reported in the paper (Tables 3–14) and reproduced in [`validation/results/`](#repository-structure) below.
 
 > **Scope note:** the CNN-1D comparison is specific to the naive, zero-calibration, from-scratch regime studied here. It does not constitute a general claim against deep learning for sEMG — see Discussion §5.2 of the paper for the full argument.
 
@@ -63,45 +63,69 @@ sEMG-Zero-Calibration-LOSO-Benchmark/
 ├── LICENSE
 ├── requirements.txt
 ├── .gitignore
+├── .gitattributes
 │
-├── config/                          # Global paths, dataset configs, hyperparameters
-├── data_loaders/                    # NinaPro DB2 / DB3 / DB7 loading + 41-class harmonised label mapping
-├── preprocessing_and_features/      # Bandpass (20–450Hz) + 50Hz notch + 400ms windowing
-│                                     # + 678D raw feature extraction → SelectKBest (k=420)
-├── classifiers/                     # XGBoost / LDA / LinearSVC / RandomForest LOSO runner
-├── cnn_baseline/                    # Multi-scale CNN-1D (v8): 3 conv branches, 48,472 params
-├── validate_engine/                 # Core LOSO fold management — per-fold leakage-free fitting
-├── metrics/                         # Accuracy, macro-F1, confusion matrix computation
-├── statistics/                      # Friedman / Iman-Davenport, Nemenyi, Wilcoxon+Holm-Šidák, Cohen's d
-├── shap_analysis/                   # SHAP TreeExplainer — group + individual feature importance
-├── ablation_studies/                # Feature-group ablation (Table 11) + window-size ablation (Table 12)
-├── confusion_matrices/              # Aggregate (Figure 3) and active-only (Figure 4) CM generation
-├── per_class_and_timing/            # Per-class F1/Precision/Recall + CPU timing benchmarks (Table 14)
-├── final_analysis/                  # Final aggregated tables and cross-database summaries
-├── report_generator/                # Automated Markdown / HTML / JSON report generation
-│
-└── results/
-    ├── loso_checkpoints/            # ninapro_db2_checkpoint.json, ninapro_db3_checkpoint.json,
-    │                                 # ninapro_db7_checkpoint.json — per-fold raw LOSO outputs
-    └── final_outputs/                # Pre-computed final results used directly in the paper:
-        ├── confusion_matrix_db{2,3,7}.xlsx / .npy        # Aggregate confusion matrices (Fig. 3)
-        ├── confusion_matrix_raw_db{3,7}.npy              # Raw (non-normalised) confusion matrices
-        ├── confusion_xgb_db{2,3,7}.pdf                   # Confusion matrix figures
-        ├── shap_group_importance_db{2,3,7}.xlsx          # SHAP feature-group importance (Table 9)
-        ├── shap_top20_db{2,3,7}.xlsx                      # Top-20 individual SHAP features (Table 10)
-        ├── shap_all_features_db{2,3,7}.xlsx              # Full per-feature SHAP values
-        ├── shap_group_pie_db{2,3,7}.pdf                   # SHAP group importance pie charts (Fig. 6)
-        ├── shap_top20_bar_db{2,3,7}.pdf                   # SHAP top-20 bar charts
-        ├── Table1_dataset_characteristics.xlsx           # Table 1
-        ├── Table4_literature_comparison.xlsx             # Table 8
-        ├── TableS_feature_ablation_db7.xlsx              # Table 11
-        ├── TableS_window_ablation_db7.xlsx                # Table 12
-        ├── TableS6_fold_details_db{2,3,7}.xlsx           # Per-fold LOSO results
-        ├── TableS6_perclass_f1_db{2,3,7}.xlsx            # Per-class F1 (Supplementary S2d–f)
-        └── TableS7_real_timing_db{2,3,7}.xlsx            # CPU timing benchmarks (Table 14, Supp. S3)
+└── validation/                          # Single importable package — the complete pipeline
+    │
+    ├── config.yaml                      # All paths, dataset configs, hyperparameters
+    ├── data_loaders.py                  # NinaPro DB2 / DB3 / DB7 loading + 41-class harmonised label mapping
+    ├── process_engine.py                # Bandpass (20–450Hz) + 50Hz notch + 400ms windowing
+    │                                     #   + 678D raw feature extraction → SelectKBest (k=420)
+    ├── validate_engine.py                # Core LOSO fold engine — per-fold, leakage-free fit/transform/eval
+    ├── metrics.py                        # Accuracy, macro-F1, confusion matrix computation
+    ├── checkpoint.py                     # Resume-safe checkpointing for long LOSO runs
+    ├── statistical_reporter.py           # Statistical-test helpers (Wilcoxon, bootstrap, ...)
+    ├── report_generator.py               # Automated Markdown / HTML / JSON report generation
+    ├── shap_analysis.py                  # SHAP TreeExplainer — group + individual feature importance
+    ├── cnn_baseline.py                   # Early CNN-1D model definition (the final v8 model used for
+    │                                     #   the paper is self-contained in 03_run_cnn1d_baseline.py)
+    │
+    ├── 01a_run_loso_benchmark.py                    # Main LOSO benchmark: XGBoost/LDA/LinearSVC/RandomForest
+    │                                                 #   × DB2/DB3/DB7 → Table 2, Table S1
+    ├── 01b_recompute_loso_statistics.py             # Statistical tests from saved results (no re-run needed)
+    │                                                 #   → Tables S2–S4
+    ├── 01c_correct_friedman_test.py                 # Corrected Friedman p-values → Table S2 (corrected)
+    ├── 02a_run_window_size_ablation.py              # Window-size ablation: 7 sizes × 4 classifiers, DB7
+    ├── 02b_run_feature_group_ablation.py            # Feature-group ablation: 5 configs × 2 classifiers, DB7
+    ├── 02c_analyze_ablation_statistics.py           # Friedman / Nemenyi / Wilcoxon for both ablations above
+    ├── 02d_run_full_ablation_suite.py               # Single-command runner for 02a + 02b + 02c
+    ├── 02e_generate_posthoc_figures_and_tables.py   # Main-results figure, confusion-matrix figures,
+    │                                                 #   per-class F1, Nemenyi post-hoc tables
+    ├── 03_run_cnn1d_baseline.py                     # Multi-scale CNN-1D (v8) baseline, 48,472 params
+    ├── 04_compute_perclass_f1_and_timing.py         # Per-class F1 + CPU timing benchmarks → Tables S6–S7
+    ├── 05_run_final_analyses.py                     # SHAP, confusion matrices, Table 1, Table 4,
+    │                                                 #   ablation summary tables
+    ├── 06a_extract_confusion_matrices.py            # Per-database confusion-matrix figures from saved JSON
+    ├── 06b_generate_figure4_confusion_matrices.py   # Combined 3-panel Figure 4
+    │
+    ├── tools/
+    │   └── inspect_ninapro_mat_files.py  # Sanity-check a raw NinaPro .mat download
+    │
+    ├── dev_history/                      # Archived / exploratory — NOT used for any reported result
+    │   ├── README.md                     #   (see this file for what's here and why)
+    │   ├── diagnose_minirocket_exploration.py
+    │   └── prototype_multi_classifier_runner.py
+    │
+    └── results/
+        ├── Table2_main_results.csv, TableS1–S4_*.csv, Figure4_confusion_matrices.pdf/png, ...
+        ├── loso_checkpoints/             # ninapro_db{2,3,7}_checkpoint.json — per-fold raw LOSO outputs
+        └── final_outputs/                # Pre-computed final results used directly in the paper:
+            ├── confusion_matrix_db{3,7}.npy, confusion_xgb_db{2,3,7}.png/pdf   # Fig. 3 confusion matrices
+            ├── shap_group_importance_db{2,3,7}.csv     # SHAP feature-group importance (Table 9)
+            ├── shap_top20_db{2,3,7}.csv                # Top-20 individual SHAP features (Table 10)
+            ├── shap_all_features_db{2,3,7}.csv         # Full per-feature SHAP values
+            ├── shap_group_pie_db{2,3,7}.png/pdf        # SHAP group importance pie charts (Fig. 6)
+            ├── shap_top20_bar_db{2,3,7}.png/pdf        # SHAP top-20 bar charts
+            ├── Table1_dataset_characteristics.csv      # Table 1
+            ├── Table4_literature_comparison.csv        # Table 8
+            ├── TableS_feature_ablation_db7.csv         # Table 11
+            ├── TableS_window_ablation_db7.csv          # Table 12
+            ├── TableS6_fold_details_db{2,3,7}.csv      # Per-fold LOSO results
+            ├── TableS6_perclass_f1_db{2,3,7}.csv       # Per-class F1 (Supplementary S2d–f)
+            └── TableS7_real_timing_db{2,3,7}.csv       # CPU timing benchmarks (Table 14, Supp. S3)
 ```
 
-> Folder names above reflect a cleaned, paper-aligned reorganisation of the original development codebase. Every file under `results/final_outputs/` corresponds directly to a numbered Table or Figure in the manuscript — intermediate development/debugging artifacts were intentionally excluded to keep this repository a faithful, citable record of what is reported in the paper.
+> The pipeline scripts are numbered by phase (`01` = main LOSO benchmark, `02` = ablations, `03` = CNN-1D baseline, `04` = per-class F1 & timing, `05` = final analyses/SHAP, `06` = figure generation) rather than by development date, so the order in a file listing matches the order described in the paper. Two early, superseded scripts are kept for transparency under `dev_history/` but are not part of the reported pipeline. Every file under `results/final_outputs/` corresponds directly to a numbered Table or Figure in the manuscript.
 
 ---
 
@@ -137,7 +161,7 @@ Phase 5 — Evaluation
 ## Installation & Quick Start
 
 ```bash
-git clone https://github.com/USERNAME/sEMG-Zero-Calibration-LOSO-Benchmark.git
+git clone https://github.com/Qussai-BME/sEMG-Zero-Calibration-LOSO-Benchmark.git
 cd sEMG-Zero-Calibration-LOSO-Benchmark
 
 python -m venv venv
@@ -149,13 +173,36 @@ pip install -r requirements.txt
 
 ### Run the LOSO pipeline
 ```bash
-python -m classifiers.main --db db2
-python -m classifiers.main --db db3
-python -m classifiers.main --db db7
+cd validation
+
+# Phase 1 — main LOSO benchmark (all 4 classifiers × DB2/DB3/DB7) + statistics
+python 01a_run_loso_benchmark.py
+python 01b_recompute_loso_statistics.py
+python 01c_correct_friedman_test.py
+
+# Phase 2 — ablations (run individually, or all at once with 02d)
+python 02a_run_window_size_ablation.py
+python 02b_run_feature_group_ablation.py
+python 02c_analyze_ablation_statistics.py
+python 02e_generate_posthoc_figures_and_tables.py
+
+# Phase 3 — CNN-1D baseline (repeat --db for each database)
+python 03_run_cnn1d_baseline.py --db ninapro_db7
+
+# Phase 4 — per-class F1 + CPU timing
+python 04_compute_perclass_f1_and_timing.py --db db7 --task all
+
+# Phase 5 — SHAP, confusion matrices, Table 1 / Table 4, ablation summaries
+python 05_run_final_analyses.py --db db7 --task all
+
+# Phase 6 — figures
+python 06a_extract_confusion_matrices.py
+python 06b_generate_figure4_confusion_matrices.py
 ```
+Every script accepts `--help` for its full set of flags (subject subsets, fast/debug modes, `--skip-existing`, etc.) — see each script's module docstring for details.
 
 ### Use pre-computed results directly (no re-run needed)
-Everything reported in the paper is already available under [`results/final_outputs/`](#repository-structure) — confusion matrices, SHAP values, ablation tables, and per-fold timing benchmarks.
+Everything reported in the paper is already available under [`validation/results/`](#repository-structure) — confusion matrices, SHAP values, ablation tables, and per-fold timing benchmarks (the SHAP/timing/Table 1/Table 4 outputs specifically live under `validation/results/final_outputs/`).
 
 ---
 
@@ -165,7 +212,7 @@ The **NinaPro** databases are publicly available but **not redistributed** in th
 
 - NinaPro DB2 / DB3 / DB7: http://ninaweb.hevs.ch
 
-Download the raw `.mat` files and place them under `data/raw/`; `data_loaders/` handles parsing and the 41-class harmonisation.
+Download the raw `.mat` files and place them under `data/raw/`; `validation/data_loaders.py` handles parsing and the 41-class harmonisation.
 
 ```bibtex
 @article{atzori2014electromyography,
@@ -190,22 +237,9 @@ Download the raw `.mat` files and place them under `data/raw/`; `data_loaders/` 
 | PyTorch | 2.0 |
 | SHAP | 0.42 |
 | SciPy | 1.10 |
-| scikit-posthocs | 0.7 |
+| statsmodels | 0.14 |
 
-```
-numpy>=1.24.0
-pandas>=2.0.0
-scipy>=1.10.0
-scikit-learn>=1.3.0
-xgboost>=1.7.0
-shap>=0.42.0
-scikit-posthocs>=0.7.0
-torch>=2.0.0
-matplotlib>=3.7.0
-seaborn>=0.12.0
-openpyxl>=3.1.0
-h5py>=3.9.0
-```
+See [`requirements.txt`](requirements.txt) for the full, versioned dependency list (built directly from the imports in `validation/`).
 
 ---
 

@@ -57,7 +57,7 @@ METRICS_PATH = os.path.join(VALIDATION_DIR, "metrics.py")
 VALIDATE_PATH = os.path.join(VALIDATION_DIR, "validate_engine.py")
 CONFIG_PATH = os.path.join(VALIDATION_DIR, "config.yaml")
 RESULTS_DIR = os.path.join(VALIDATION_DIR, "results")
-BACKUP_DIR = os.path.join(VALIDATION_DIR, "paper1_backups")
+BACKUP_DIR = os.path.join(VALIDATION_DIR, "backups")
 
 CLASSIFIERS = ['XGBoost', 'LDA', 'LinearSVC', 'RandomForest']
 DATASETS = ['ninapro_db7', 'ninapro_db3', 'ninapro_db2']

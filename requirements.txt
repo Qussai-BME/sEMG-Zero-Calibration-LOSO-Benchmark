@@ -1,17 +1,33 @@
-streamlit>=1.25.0
-numpy>=1.23.0
-scipy>=1.10.0
+# Core numerical / data stack
+numpy>=1.24.0
 pandas>=2.0.0
-plotly>=5.15.0
+scipy>=1.10.0
+
+# Classifiers
+scikit-learn>=1.3.0
+xgboost>=1.7.0
+lightgbm>=4.0.0            # optional alternate classifier path (validation/metrics.py)
+
+# CNN-1D baseline
+torch>=2.0.0
+
+# Explainability
+shap>=0.42.0
+
+# Statistics
+statsmodels>=0.14.0
+
+# Plotting
 matplotlib>=3.7.0
-pyedflib>=0.1.20
-psutil>=5.9.0
-reportlab>=4.0.0
-scikit-learn>=1.2.0
-fastapi>=0.95.0
-uvicorn>=0.21.0
-python-multipart>=0.0.6
-tqdm>=4.65.0
-markdown>=3.4.1
-pyyaml>=6.0
 seaborn>=0.12.0
+
+# I/O
+pyyaml>=6.0
+h5py>=3.9.0                # NinaPro v7.3 .mat files
+PyWavelets>=1.4.0          # optional wavelet features (disabled by default in config.yaml)
+
+# Utilities
+joblib>=1.2.0
+tqdm>=4.65.0
+psutil>=5.9.0
+markdown>=3.4.0            # optional HTML report generation (validation/report_generator.py)
