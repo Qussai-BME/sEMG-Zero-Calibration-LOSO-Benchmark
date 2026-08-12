@@ -65,6 +65,15 @@ sEMG-Zero-Calibration-LOSO-Benchmark/
 ├── .gitignore
 ├── .gitattributes
 │
+├── src/
+│   ├── __init__.py
+│   └── core_engine.py                   # EMGConfig / EMGFeatureExtractor — signal-processing config
+│                                         #   object and filter design (bandpass + notch) used by
+│                                         #   process_engine.py. Imported as `from src.core_engine
+│                                         #   import EMGConfig, EMGFeatureExtractor`; run scripts from
+│                                         #   inside validation/ as shown below — the auto-detection
+│                                         #   logic in each script resolves this import automatically.
+│
 └── validation/                          # Single importable package — the complete pipeline
     │
     ├── config.yaml                      # All paths, dataset configs, hyperparameters
