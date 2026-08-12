@@ -253,13 +253,18 @@ dataset_adaptive_configs:
 # ============================================================================
 # Dataset paths and metadata (preserved from v31.0)
 # ============================================================================
+# NOTE: all paths below are relative to validation/ and match the layout
+# described in the top-level README's "Data Availability" section —
+# download each dataset's raw files and place them under data/raw/<name>/
+# before running the pipeline. (Originally hardcoded to the author's local
+# machine; genericized here so the repo runs on any machine as documented.)
 datasets:
   uci:
-    path: 'C:\\Users\\MAIN IT\\Desktop\\Deebseek EMG\\data\\emg+data+for+gestures\\EMG_data_for_gestures-master'
+    path: 'data/raw/uci_emg_gestures/EMG_data_for_gestures-master'
     sampling_rate: 1000
     remove_class_zero: true
   ninapro_db7:
-    path: 'E:\\NinaProDB7'
+    path: 'data/raw/ninapro_db7'
     sampling_rate: 2000
     remove_class_zero: false
     subject_count: 22
@@ -268,7 +273,7 @@ datasets:
     amputee_subject_ids: [21, 22]
     expected_channels: 12
   ninapro_db2:
-    path: 'E:\\NinaProDB2'
+    path: 'data/raw/ninapro_db2'
     sampling_rate: 2000
     remove_class_zero: false
     subject_count: 40
@@ -277,7 +282,7 @@ datasets:
     exercises: {B: 17, C: 23, D: 9}
     expected_channels: 12
   ninapro_db3:
-    path: 'E:\\NinaProDB3'
+    path: 'data/raw/ninapro_db3'
     sampling_rate: 2000
     remove_class_zero: false
     subject_count: 11
@@ -287,7 +292,7 @@ datasets:
     expected_channels: 12
     channel_irregularity: true
   uci_physical:
-    path: 'E:\\UCI EMG Physical Action Data Set'
+    path: 'data/raw/uci_emg_physical_action'
     sampling_rate: 1000
     remove_class_zero: false
 
