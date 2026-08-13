@@ -1,6 +1,6 @@
 # sEMG Zero-Calibration LOSO Benchmark
 
-**Hand-Crafted Features Outperform CNN-1D Under Zero-Calibration Cross-Subject sEMG: A Three-Database LOSO Benchmark Across Intact-Limb and Transradial Amputee Populations**
+**Rest-Class Metric Inflation in Zero-Calibration Cross-Subject sEMG: A Three-Database LOSO Benchmark Across Intact-Limb and Transradial Amputee Populations**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/downloads/)
@@ -267,8 +267,8 @@ See [`requirements.txt`](requirements.txt) for the full, versioned dependency li
 If you use this code or these results, please cite the paper:
 
 ```bibtex
-@article{adlbi2026handcrafted,
-  title   = {Hand-Crafted Features Outperform CNN-1D Under Zero-Calibration Cross-Subject sEMG:
+@article{adlbi2026restclass,
+  title   = {Rest-Class Metric Inflation in Zero-Calibration Cross-Subject sEMG:
              A Three-Database LOSO Benchmark Across Intact-Limb and Transradial Amputee Populations},
   author  = {Adlbi, Qussai and Darwich, Mohamad Ayham},
   journal = {Biomedical Signal Processing and Control},
