@@ -5,7 +5,7 @@ No need to re-run experiments! Just point to the results directory.
 
 USAGE:
   python 01b_recompute_loso_statistics.py
-  python 01b_recompute_loso_statistics.py "C:\path\to\results"
+  python 01b_recompute_loso_statistics.py "/path/to/results"
 """
 import os
 import sys

@@ -881,7 +881,7 @@ def generate_window_summary():
     # LaTeX
     tex_path = os.path.join(RESULTS_DIR, 'Table_window_ablation.tex')
     with open(tex_path, 'w', encoding='utf-8') as f:
-        f.write(r"\begin{table}[htbp]" + "\n\centering\n")
+        f.write(r"\begin{table}[htbp]" + "\n" + r"\centering" + "\n")
         f.write(r"\caption{Window Size Ablation on DB7 (22-fold LOSO, 41 classes)}" + "\n")
         f.write(r"\label{tab:window_ablation}" + "\n")
         f.write(r"\begin{tabular}{l" + "c" * len(WINDOW_CLASSIFIERS) + "}\n")
@@ -993,7 +993,7 @@ def generate_feature_summary():
     # LaTeX
     tex_path = os.path.join(RESULTS_DIR, 'Table_feature_ablation.tex')
     with open(tex_path, 'w', encoding='utf-8') as f:
-        f.write(r"\begin{table}[htbp]" + "\n\centering\n")
+        f.write(r"\begin{table}[htbp]" + "\n" + r"\centering" + "\n")
         f.write(r"\caption{Feature Group Ablation on DB7 (22-fold LOSO, 41 classes)}" + "\n")
         f.write(r"\label{tab:feature_ablation}" + "\n")
         f.write(r"\begin{tabular}{l" + "c" * len(FEATURE_CLASSIFIERS) + "}\n")

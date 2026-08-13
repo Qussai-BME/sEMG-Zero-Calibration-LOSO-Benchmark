@@ -66,7 +66,7 @@ classification:
   class_weight: 'balanced'
   pca_components: null
   use_ensemble: false 
-  #balanced_sample_weight: false  وقت زيادة عالفاضي        # v37.0: per-class weights for XGBoost (more precise than class_weight)
+  #balanced_sample_weight: false        # v37.0: per-class weights for XGBoost (more precise than class_weight)
   #progressive_calibration: false         # v37.0: unsupervised test adaptation (Vidovic et al. 2016)                  # v32.0: ensemble for hard datasets
 
 validation:

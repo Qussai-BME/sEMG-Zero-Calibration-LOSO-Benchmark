@@ -1,4 +1,4 @@
-﻿"""
+"""
 process_engine.py - v16.0 (SELECTIVE INTELLIGENCE — Adaptive Engine)
 
 ═══════════════════════════════════════════════════════════════════════

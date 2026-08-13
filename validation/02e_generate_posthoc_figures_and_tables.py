@@ -492,7 +492,7 @@ if nemenyi_rows:
     # LaTeX
     tex_path = os.path.join(RESULTS_DIR, 'TableS5_nemenyi_posthoc.tex')
     with open(tex_path, 'w', encoding='utf-8') as f:
-        f.write(r"\begin{table}[htbp]" + "\n\centering\n")
+        f.write(r"\begin{table}[htbp]" + "\n" + r"\centering" + "\n")
         f.write(r"\caption{Nemenyi Post-Hoc Pairwise Comparisons}" + "\n")
         f.write(r"\label{tab:nemenyi_posthoc}" + "\n")
         f.write(r"\begin{tabular}{lllrrrl}" + "\n")
@@ -568,7 +568,7 @@ if day2_window:
         # LaTeX
         tex = os.path.join(RESULTS_DIR, 'Table_window_nemenyi.tex')
         with open(tex, 'w', encoding='utf-8') as f:
-            f.write(r"\begin{table}[htbp]" + "\n\centering\n")
+            f.write(r"\begin{table}[htbp]" + "\n" + r"\centering" + "\n")
             f.write(r"\caption{Window Ablation --- Nemenyi Post-Hoc (DB7)}" + "\n")
             f.write(r"\label{tab:window_nemenyi}" + "\n")
             f.write(r"\begin{tabular}{llllrrrl}" + "\n")
@@ -625,7 +625,7 @@ if day2_window:
     # LaTeX
     tex = os.path.join(RESULTS_DIR, 'Table_window_ablation_FULL.tex')
     with open(tex, 'w', encoding='utf-8') as f:
-        f.write(r"\begin{table}[htbp]" + "\n\centering\n")
+        f.write(r"\begin{table}[htbp]" + "\n" + r"\centering" + "\n")
         f.write(r"\caption{Window Size Ablation on DB7 (Accuracy + Macro F1)}" + "\n")
         f.write(r"\label{tab:window_ablation_full}" + "\n")
         header_acc = " & ".join([f"{clf} Acc" for clf in CLASSIFIERS])
@@ -670,7 +670,7 @@ if day2_feature:
 
     tex = os.path.join(RESULTS_DIR, 'Table_feature_ablation_FULL.tex')
     with open(tex, 'w', encoding='utf-8') as f:
-        f.write(r"\begin{table}[htbp]" + "\n\centering\n")
+        f.write(r"\begin{table}[htbp]" + "\n" + r"\centering" + "\n")
         f.write(r"\caption{Feature Group Ablation on DB7 (Accuracy + Macro F1)}" + "\n")
         f.write(r"\label{tab:feature_ablation_full}" + "\n")
         f.write("Config & XGBoost Acc & XGBoost F1 & LDA Acc & LDA F1 \\\\\n")
