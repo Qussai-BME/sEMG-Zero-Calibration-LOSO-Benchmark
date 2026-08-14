@@ -5,8 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/downloads/)
 [![Status](https://img.shields.io/badge/Status-Under%20Review-orange.svg)](#)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21940345.svg)](https://doi.org/10.5281/zenodo.21940345)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21940345.svg)](https://doi.org/10.5281/zenodo.21940345)
 
 **Maintainer:** Qussai Adlbi
 **Affiliations:** Al-Andalus University for Medical Sciences (Syria) · Pázmány Péter Catholic University (Budapest, Hungary)
