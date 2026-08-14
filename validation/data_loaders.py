@@ -138,7 +138,7 @@ def _extract_ninapro_data(data, loader_type):
 
 
 def _infer_exercise_tag(filepath):
-    """
+    r"""
     Infer exercise tag from filename.
 
     v9.0 FIXED: Now handles ALL common NinaPro naming formats:
@@ -149,7 +149,7 @@ def _infer_exercise_tag(filepath):
       - Dir:   Exercise_B/S1_B1.mat → 'B' (from parent, word-boundary safe)
 
     v8.1 BUG (fixed):
-      - r'_E(\\d)_' required trailing underscore → S1_E1.mat returned None
+      - r'_E(\d)_' required trailing underscore → S1_E1.mat returned None
       - 'B' in 'subject1' was True (B inside suBject) → wrong exercise
     """
     stem = Path(filepath).stem.upper()

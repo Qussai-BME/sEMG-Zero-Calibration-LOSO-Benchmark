@@ -35,10 +35,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
-from matplotlib.ticker import PercentFormatter
 
 # ── Fonts (cross-platform) ────────────────────────────────────────────
-import platform, os
 import matplotlib.font_manager as fm
 _DEJAVU_PATHS = [
     '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',          # Linux

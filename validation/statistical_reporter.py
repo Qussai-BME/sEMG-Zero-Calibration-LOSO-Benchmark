@@ -736,10 +736,12 @@ def run_full_statistical_pipeline(results_json_paths,
 
 
 if __name__ == '__main__':
+    import tempfile
     np.random.seed(42)
     print("Running statistical_reporter.py smoke test...")
 
-    reporter = StatisticalReporter(output_dir='/tmp/stats_test')
+    _tmpdir = os.path.join(tempfile.gettempdir(), 'stats_test')
+    reporter = StatisticalReporter(output_dir=_tmpdir)
 
     xgb_accs = np.clip(
         np.random.normal(0.8716, 0.1445, 36), 0.4, 1.0
@@ -767,4 +769,4 @@ if __name__ == '__main__':
     reporter.group_comparison(
         xgb_accs[:3], xgb_accs[3:5], dataset_name='NinaPro_DB7_TEST'
     )
-    print("\nSmoke test passed -- all outputs in /tmp/stats_test/")
+    print(f"\nSmoke test passed -- all outputs in {_tmpdir}/")

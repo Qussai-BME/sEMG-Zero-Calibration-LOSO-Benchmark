@@ -26,9 +26,8 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         path = sys.argv[1]
     else:
-        print("Usage: python inspect_ninapro_mat_files.py <path_to_mat_file_or_dir>")
-        print("Example: python inspect_ninapro_mat_files.py ./data/raw/ninapro_db7")
-        sys.exit(1)
+        # Adjust this to your actual path
+        path = "."
 
     if os.path.isdir(path):
         for file in os.listdir(path):
