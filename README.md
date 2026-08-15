@@ -233,7 +233,7 @@ Download the raw `.mat` files and place them under `data/raw/`; `validation/data
 }
 ```
 
-**Code and pre-computed results:** archived in full at Zenodo — [https://doi.org/10.5281/zenodo.20982280](https://doi.org/10.5281/zenodo.20982280) (Release v1.0, June 2026), and on GitHub at the link above.
+**Code and pre-computed results:** archived in full at Zenodo — [https://doi.org/10.5281/zenodo.21940345](https://doi.org/10.5281/zenodo.21940345) (Release v1.0), and on GitHub at the link above.
 
 ---
 
